@@ -1,0 +1,109 @@
+
+
+
+   name: Camden Town
+   city_id: 2 
+   level: 2
+   coordinates: 51.541, -0.1433
+   
+   name: Big Ben (Westminster Palace)
+   city_id: 2
+   level: 1
+   coordinates: 51.50067, -0.12457
+
+   name: Tower Bridge
+   city_id:2
+   level: 1
+   coordinates: 51.505555555556, -0.075277777777778
+
+   name: Westminster Abby
+   city_id:2
+   level: 1
+   coordinates: 51.4994, -0.127367
+
+   name: Picadilly Circus
+   city_id: 2
+   level: 2
+   coordinates: 51.510067, -0.133869
+
+   name: British Museum
+   city_id: 2
+   level: 1
+   coordinates: 51.519444444444, -0.12694444444444
+
+   name: London Tower
+   city_id: 2
+   level: 2
+   coordinates: 51.5082, -0.076198055555556
+
+   name: Portobello Market
+   city_id: 2
+   level: 3
+   coordinates: 51.5085 , -0.2023
+
+   name: Notting Hills 
+   city_id: 2
+   level: 3
+   coordinates: 51.5109995, -0.2055267
+
+   name: St. Paul's Cathedral
+   city_id: 2
+   level: 2
+   coordinates: 51.513870, -0.098362
+
+   name: Millennium Bridge
+   city_id:2 
+   level: 2
+   coordinates:  51.510173, -0.098438
+
+   name: Buckingham Palace
+   city_id: 2
+   level: 1
+   coordinates: 51.501, -0.142
+
+   name: Soho 
+   city_id: 2
+   level: 3
+   coordinates: 51.513, -0.131 
+
+   name: Chinatown
+   city_id: 2
+   level: 3
+   coordinates: 51.511822, -0.131695
+
+   name: London Eye
+   city_id: 2
+   level: 2
+   coordinates: 51.5033, -0.1194
+
+   name: Trafalgar Square
+   city_id: 2
+   level: 1
+   coordinates: 51.508045, -0.128217
+
+   name: St Pancra's Station 
+   city_id: 2
+   level: 3
+   coordinates: 51.5318912, -0.1268506
+
+   name: Natural History Museum
+   city_id: 2
+   level: 2
+   coordinates: 51.496111111111, -0.17611111111111
+
+   name: Hyde Park
+   city_id: 2
+   level: 1
+   coordinates: 51.508610, -0.163611
+
+   name: Buckingham Palace
+   city_id: 2
+   level: 1
+   coordinates: 51.501476, -0.140634
+
+   name: The City of London
+   city_id: 2
+   level: 3
+   coordinates: 51.51556, -0.09306 
+
+   

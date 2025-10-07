@@ -1,60 +1,107 @@
 
    name: Central Sattion 
    city_id:
-   level: 
+   level: 1
    coordinates:
 
    name: Central Park
    city_id:
-   level:
+   level: 1
    coordinates:
 
    name: Empire Sate
    city_id:
-   level:
+   level: 2
    coordinates:
 
    name: Bryan Park (National Library)
    city_id:
-   level:
+   level: 2
    coordinates:
 
    name: 5th Avenue
    city_id:
-   level:
+   level: 1
    coordinates:
 
    name: St Patrick's Cathedral
    city_id:
-   level:
+   level: 3
    coordinates:
 
    name: The Channel Gardens (Rockefeller Center)
    city_id:
-   level:
+   level: 2
    coordinates:
 
    name: Flatiron Building
    city_id:
-   level:
+   level: 3
    coordinates:
 
    name: Times Square
    city_id:
-   level:
+   level: 1
    coordinates:
 
    name: The Vessel
    city_id:
-   level:
+   level: 3
    coordinates:
 
    name: Broadway
    city_id:
-   level:
+   level: 1
    coordinates:
 
    name: The Edge
    city_id:
-   level:
+   level: 3
    coordinates:
+
+   name: The High Line
+   city_id:
+   level: 3
+   coordinates:
+
+   name: Little Island
+   city_id: 
+   level: 3
+   coordinates:
+
+   name: Soho NYC
+   city_id:
+   level: 3
+   coordinates:
+
+   name: Chinatown NYC
+   city_id:
+   level: 3
+   coordinates:
+
+   name: Wall Street
+   city_id:
+   level: 2
+   coordinates:
+
+   name: The World Trade Center
+   city_id:
+   level: 1
+   coordinates:
+   
+   name: Statue of Liberty
+   city_id:
+   level: 3
+   coordinates:
+
+   name: Brooklyn Bridge
+   city_id:
+   level: 2
+   coordinates:
+
+   name: Dumbo Pebble Beach (Skyline View)
+   city_id:
+   level: 3
+   coordinates:
+
+ 

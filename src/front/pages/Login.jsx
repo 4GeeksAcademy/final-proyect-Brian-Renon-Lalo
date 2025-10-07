@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { login } from '../../services/fetch';
 import Register from './Register';
 
-const Login = ({ switchToRegister, setIsAuthenticated }) => {
+const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -21,8 +21,8 @@ const Login = ({ switchToRegister, setIsAuthenticated }) => {
             console.log("User logged in:", data)
 
             setTimeout(() => {
-                navigate("/")//añadir componente perfil
-            }, 1000);
+                navigate("/")//añadir componente al cual queremos que se redirija
+            }, 2000);
 
         } catch (err) {
             setError("Incorrect LogIn");

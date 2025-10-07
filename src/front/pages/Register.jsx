@@ -40,11 +40,9 @@ const Register=() => {
                 </div>
                 <button type="submit">Create new account</button>
             </form>
-            {success && <p className="succes">{success}</p>}
-            {error && <p className="error">{error}</p>}
-                
-
-                <p>Do you have an account?<Link to="/Register">Register</Link></p>
+                {success && <p className="succes">{success}</p>}
+                {error && <p className="error">{error}</p>}
+            <p>Do you have an account?<Link to="/Register">Register</Link></p>
         </div>
     );
 };

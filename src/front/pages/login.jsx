@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { login } from '../../services/fetch';
-import Register from './Register';
+import register from './register';
 
-const Login = () => {
+const login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -21,7 +21,7 @@ const Login = () => {
             console.log("User logged in:", data)
 
             setTimeout(() => {
-                navigate("/")//añadir componente al cual queremos que se redirija
+                navigate("/Home")//añadir componente al cual queremos que se redirija
             }, 2000);
 
         } catch (err) {
@@ -50,4 +50,4 @@ const Login = () => {
         );
     };
 
-export default Login;
+export default login;

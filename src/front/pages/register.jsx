@@ -3,7 +3,7 @@ import { register } from "../../services/fetch";
 import { Link, useNavigate } from "react-router-dom";
 
 
-const Register=() => {
+const register=() => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -47,4 +47,4 @@ const Register=() => {
     );
 };
 
-export default Register;
+export default register;

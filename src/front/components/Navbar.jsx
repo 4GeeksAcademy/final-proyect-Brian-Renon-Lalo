@@ -30,7 +30,7 @@ export const Navbar = () => {
 		<nav className="navbar navbar-light bg-light">
 			<div className="container">
 				<Link to="/">
-					<span className="navbar-brand mb-0 h1">Rute Zero</span>
+					<span className="navbar-brand mb-0 h1">Ruta Zero</span>
 				</Link>
 				<div className="ml-auto">
 					{isLogged ? ( 

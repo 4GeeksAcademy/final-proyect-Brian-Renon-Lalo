@@ -8,6 +8,7 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
+from datetime import timedelta
 
 api = Blueprint('api', __name__)
 
@@ -53,12 +54,12 @@ def login():
     if not bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
         return jsonify({"msg": "Incorrect credentials"}), 401
     
-    token = create_access_token(identity=str(user.id))
-    return jsonify({"token": token, "user": user.serialize()}), 201
+    token = create_access_token(identity=str(user.id),expires_delta=timedelta(hours=1))
+    return jsonify({"token": token, "user": user.serialize()}), 200
 
 
 
-@api.route('/user/<int:user_id>', methods=['GET'])
+@api.route('/user/<user_id>', methods=['GET'])
 @jwt_required()
 def get_single_user(user_id):
     user = User.get_user_by_id(user_id)
@@ -69,25 +70,10 @@ def get_single_user(user_id):
     current_user_id = get_jwt_identity()
     
     if str(current_user_id) != str(user_id):
-        return jsonify({"msg":"Acces denied"}), 403
+        return jsonify({"msg":"Access denied"}), 403
     
     return jsonify(user.serialize()), 200
 
-@api.route ('user/<int:user_id>', methods= ['DELETE'])
-@jwt_required()
-def delete_user_route(user_id):
-    current_user_id = get_jwt_identity()
-    user_deleting = User.get_user_by_id(current_user_id)
-
-    if not user_deleting:
-        return jsonify({"msg": "Invalid token identity"}), 401
-     
-    
-    succes, msg = User.delete_user(user_id)
-    if succes:
-        return jsonify({"msg":"User deleted successfully"}), 201
-    else:
-        return jsonify({"msg":"Error deleting user"}), 404
 
 
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getProfile } from "../services/fetch";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import rzLogo from "../assets/img/rz-logo.jpg";
 
 
 
@@ -30,9 +31,11 @@ export const Profile = () => {
 
 
     return (
-        <div className="profile">
-            <h2>im the profile</h2>
-            <p>Show me How to live</p>
+        <div className="text-center mt-5">
+            <h2>Welcome to your Profile</h2>
+            <p className="lead">
+                <img src={rzLogo} className="img-fluid mb-3" />
+            </p>
             <p>Email: {user.email}</p>
         </div>
     );

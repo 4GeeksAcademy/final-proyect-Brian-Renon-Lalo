@@ -1,4 +1,4 @@
-const API_URL = "https://laughing-space-system-g46jp9gr4pvpf799-3001.app.github.dev/api";
+const API_URL = "https://fluffy-broccoli-v6xw5pp67gpfx66r-3001.app.github.dev/api";
 
 
 // User Register

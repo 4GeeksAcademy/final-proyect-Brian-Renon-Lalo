@@ -24,7 +24,7 @@ export const register = async ( email, password) => {
 };
 
 // Login de usuario
-export const login = async (email, password) => {
+export const login = async (email, password, dispatch) => {
   try {
     const response = await fetch(`${API_URL}/login`, {
       method: "POST",
@@ -45,7 +45,10 @@ export const login = async (email, password) => {
 
 
     localStorage.setItem("token", data.token);
-    localStorage.setItem("user_id", data.user.id);
+    dispatch({
+      type: "set_Logged",
+      payload: true
+    });
     return data; 
   } catch (error) {
     console.error("Error en login:", error);

@@ -5,12 +5,12 @@ import rzBrand from "../assets/img/rz-brand.png";
 
 export const Navbar = () => {
 
-	const [isLogged, setIsLogged] = useState(false);
 	const { store, dispatch } = useGlobalReducer();
-	const [profile, setProfile] = useState(null);
+	const { isLogged } = store;
+	/*const [profile, setProfile] = useState(null);*/
 	const navigate = useNavigate();
 
-	useEffect ( () => {
+	/*useEffect ( () => {
 		if(store.userProfile && store.userProfile.token) {
 			setIsLogged(true);
 			setProfile(store.userProfile);
@@ -18,31 +18,27 @@ export const Navbar = () => {
 			setIsLogged(false);
 			setProfile(null);
 		}
-	}, [store.userProfile]);
+	}, [store.isLogged]);*/
 
 	const handleLogOut = () => {
 		localStorage.removeItem('token');
-		setIsLogged(false);
+		dispatch({
+			type: "set_Logged",
+			payload: false
+		})
 		navigate("/");
 	}
 
 
 	return (
-		<nav className="navbar navbar-light bg-light">
+		<nav className="navbar">
 			<div className="container">
-				{isLogged ? (
-					<Link to="/profile">
+				<Link to="/">
 					<span className="navbar-brand mb-0 h1">
 						<img src={rzBrand} className="img-brand" />
 					</span>
 				</Link>
-				) : (
-					<Link to="/">
-					<span className="navbar-brand mb-0 h1">
-						<img src={rzBrand} className="img-brand" />
-					</span>
-				</Link>
-				)}				
+								
 				<div className="ml-auto">
 					{isLogged ? (
 						<button className="btn btn-danger" onClick={handleLogOut}>LogOut</button>

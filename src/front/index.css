@@ -1,6 +1,20 @@
-.img-brand{
-    zoom: 35%;
+/*=========Body=========*/
+
+body{
+    background-image: url("../front/assets/img/rz-fondo.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
+
+/*=========Navbar=========*/
+.navbar{
+    background: rgba(124, 80, 13, 0.432);
+}
+.img-brand{
+    zoom: 29%;
+}
+/*=========Profile======*/
 .img-pin{
     zoom: 55%;
 }

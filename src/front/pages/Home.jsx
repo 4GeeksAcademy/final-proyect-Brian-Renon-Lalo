@@ -35,7 +35,7 @@ export const Home = () => {
 	return (
 		<div className="text-center mt-5">
 			<h1 className="display-4">Start your fast rute here !</h1>
-			<h3 className="display-5">No worries about time</h3>
+			<h3 className="display-5">And stop to worried about waste time</h3>
 			<p className="lead">
 				<img src={rzPin} className="img-pin" />
 			</p>

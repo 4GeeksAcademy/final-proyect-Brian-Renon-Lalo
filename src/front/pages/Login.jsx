@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { login } from "./../services/fetch";
 import { Link, useNavigate } from "react-router-dom";
+import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
 
 export const Login = () => {
@@ -9,12 +10,13 @@ export const Login = () => {
     const [error, setError] = useState ("");
     const [success, setSuccess] = useState ("");
     const navigate = useNavigate();
+    const { store, dispatch } = useGlobalReducer();
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const data = await login(email, password);
+            const data = await login(email, password, dispatch);
         setError("");
         setSuccess("");
 

@@ -8,7 +8,9 @@ export const Layout = () => {
     return (
         <ScrollToTop>
             <Navbar />
+            <main className="flex-fill d-flex container justify-content-center aling-items-center">       
                 <Outlet />
+            </main> 
             <Footer />
         </ScrollToTop>
     )

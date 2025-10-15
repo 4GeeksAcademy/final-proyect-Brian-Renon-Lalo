@@ -1,6 +1,8 @@
-const API_URL = "https://supreme-fiesta-pvqxx5xx66c4gr-3001.app.github.dev/api";
+const API_URL = "https://laughing-space-system-g46jp9gr4pvpf799-3001.app.github.dev/api";
+
+
 // User Register
-export const register = async (email, password) => {
+export const register = async ( email, password) => {
   try {
     const response = await fetch(`${API_URL}/register`, {
       method: "POST",
@@ -11,7 +13,7 @@ export const register = async (email, password) => {
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(data.msg || "Error to Registre");
+      throw new Error(data.msg || "Error to Register");
     }
 
     return data;
@@ -37,13 +39,13 @@ export const login = async (email, password) => {
     }
 
 
-    if (!data.token) {
-      throw new Error("no Token");
+    if (!data.token || !data.user?.id) {
+      throw new Error("invalid login response");
     }
 
 
     localStorage.setItem("token", data.token);
-
+    localStorage.setItem("user_id", data.user.id);
     return data; 
   } catch (error) {
     console.error("Error en login:", error);
@@ -52,23 +54,30 @@ export const login = async (email, password) => {
 };
 
 
-export const getProfile = async (dispatch) => {
+export const getProfile = async () => {
   try {
     const token = localStorage.getItem("token");
-    const response = await fetch(`${API_URL}/profile`, {
+    const userID = localStorage.getItem("user_id");
+
+    if (!token || !userID) { throw new Error("No token or user ID found"); }
+
+    const response = await fetch (`${API_URL}/user/${userID}`,{
       method: "GET",
       headers: {
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
 
-    if (!response.ok) throw new Error("Not Authorized or invalid token ⛔");
-
     const data = await response.json();
-    dispatch({ type: "set_perfilUsuario", payload: data });
+
+    if (!response.ok) {
+      throw new Error("Error fetching profile");
+    }
+    
     return data;
   } catch (error) {
-    console.error("Error en getProfile:", error);
+    console.error("Error in getProfile:", error);
     throw error;
   }
 };

@@ -25,8 +25,7 @@ class User(db.Model):
         return {
                 "id": self.id,
                 "email": self.email,
-                "is_active":self.is_active,
-            
+                "is_active":self.is_active,          
                 }
     
 #metodo estatico CRUD
@@ -108,4 +107,4 @@ class Place(db.Model) :
                 "city_id":self.city_id,
                 "user_id":self.user_id
                 }
-#create user, get 1 usuario, delete, 
+

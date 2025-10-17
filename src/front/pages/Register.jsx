@@ -32,20 +32,28 @@ export const Register = () => {
 
 
     return (
-        <div className="Register-container">
-            <h2>Register:</h2>    
+        <div className="register-container">
+            <h2>Register</h2>
+            <div className="register-form-container">
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor="name">name</label>
-                        <input type="text" id="name" value={name} placeholder="name" onChange={(e) => setName(e.target.value)} required/>
-                    <label htmlFor="email">Email</label>
-                        <input type="email" id="email" value={email} placeholder="email" onChange={(e) => setEmail(e.target.value)} required/>
-                    <label htmlFor="password">Password</label>    
-                        <input type="password" id="password" value={password} placeholder="password" onChange={(e) => setPassword(e.target.value)} required/>
-                    <button type="submit">Register</button>
+                    <div className="mb-3">
+                        <label htmlFor="name">Name</label>
+                        <input className="form-control" type="text" id="name" value={name} placeholder="Name" onChange={(e) => setName(e.target.value)} required/>
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="email">Email</label>
+                        <input className="form-control" type="email" id="email" value={email} placeholder="Email" onChange={(e) => setEmail(e.target.value)} required/>
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="password">Password</label>    
+                        <input className="form-control" type="password" id="password" value={password} placeholder="Password" onChange={(e) => setPassword(e.target.value)} required/>
+                    </div>
+                    <button className="btn" type="submit">Register</button>
                 </form>
                 {error && <p className="error">{error}</p>}
                 {success && <p className="success">{success}</p>}
-                <p>If you have an account <Link to="/login">Log in</Link></p>
+                <p>If you have an account <Link to="/login">Login</Link></p>
+            </div>    
         </div>   
     );
 };

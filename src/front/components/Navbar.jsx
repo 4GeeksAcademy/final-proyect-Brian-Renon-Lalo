@@ -41,10 +41,10 @@ export const Navbar = () => {
 								
 				<div className="ml-auto">
 					{isLogged ? (
-						<button className="btn btn-danger" onClick={handleLogOut}>LogOut</button>
+						<button className="btn logout" onClick={handleLogOut}>LogOut</button>
 					) : (
 						<Link to="/login">
-							<button className="btn btn-primary">Login</button>
+							<button className="btn login">Login</button>
 						</Link>
 						)}
 				</div>

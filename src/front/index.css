@@ -7,14 +7,94 @@ body{
     background-position: center;
 }
 
+/*=========Footer=========*/
+
+footer {
+    background-color: rgba(224, 142, 10, 0.527);
+    width: 100%;
+    position: absolute;
+    bottom: 0%; 
+}
 /*=========Navbar=========*/
+
 .navbar{
-    background: rgba(124, 80, 13, 0.432);
+    background: rgba(224, 142, 10, 0.527);
 }
 .img-brand{
     zoom: 29%;
 }
+.navbar .login{
+    color: white;
+    background-color: rgb(39, 127, 175);
+}
+.navbar .logout{
+    color: white;
+    background-color: rgb(194, 38, 38)
+}
 /*=========Profile======*/
+
 .img-pin{
     zoom: 55%;
 }
+
+/*==========Login========*/
+
+.login-container{
+    width: 40%;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}
+.login-container h2{
+    font-size: 55px;
+    text-align: center;
+    align-items: center;
+    margin-top: 20%;
+}
+.login-container .btn{
+    background-color: rgb(39, 127, 175);
+    color: white;
+    margin-bottom: 5%;
+}
+.form-container {
+    background-color: rgba(224, 142, 10, 0.527);
+    margin-top: 10%;
+    margin-bottom: 20%;
+    padding: 10% ;
+    border-radius: 5%;
+}
+.form-container link{
+    color:rgb(39, 127, 175);
+}
+
+
+
+/*======Register=======*/
+.register-container{
+    width: 40%;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}
+.register-container h2{
+    font-size: 55px;
+    text-align: center;
+    align-items: center;
+    margin-top: 20%;
+}
+.register-container .btn{
+    background-color: rgb(39, 127, 175);
+    color: white;
+    margin-bottom: 5%;
+}
+.register-form-container {
+    background-color: rgba(224, 142, 10, 0.527);
+    margin-top: 10%;
+    margin-bottom: 20%;
+    padding: 10% ;
+    border-radius: 5%;
+}
+.register-form-container link{
+    color:rgb(39, 127, 175);
+}
+

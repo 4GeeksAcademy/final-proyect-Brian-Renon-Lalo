@@ -46,19 +46,24 @@ export const Login = () => {
     return (
         <div className="login-container">
             <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="login-email">Email</label>
-                    <input type="email" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
-                <label htmlFor="login-password">Password</label>
-                    <input type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)}required/>
-                
-                <button type="submit">Log In</button>
-            </form>
-            {error && <p className="error">{error}</p>}
-            {success && <p className="success">{success}</p>}
+            <div className="form-container">
+                <form onSubmit={handleSubmit}> 
+                    <div className="mb-3">
+                        <label htmlFor="login-email">Email</label>
+                        <input className="form-control" type="email" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="login-password">Password</label>
+                        <input className="form-control" type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)}required/>
+                    </div>    
+                    <button type="submit" className="btn">LogIn</button>
+                </form>
+            
+                {error && <p className="error">{error}</p>}
+                {success && <p className="success">{success}</p>}
 
-            <p>If you aren't registered, please <Link to="/register">register</Link></p>
+                <p>If you aren't registered, please go to <Link to="/register">register</Link></p>
+            </div>
         </div>
-        
     );
 };

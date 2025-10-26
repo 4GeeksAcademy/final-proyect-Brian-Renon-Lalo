@@ -1,10 +1,10 @@
-const API_URL = "https://obscure-space-umbrella-97pwx667466f9r5-3001.app.github.dev/api";
+const API_URL = import.meta.env.VIT_BACKEND_URL;
 
 
 // User Register
-export const register = async ( email, password) => {
+export const register = async (name, email, password) => {
   try {
-    const response = await fetch(`${API_URL}/register`, {
+    const response = await fetch(`${API_URL}api/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -26,7 +26,7 @@ export const register = async ( email, password) => {
 // Login de usuario
 export const login = async (email, password, dispatch) => {
   try {
-    const response = await fetch(`${API_URL}/login`, {
+    const response = await fetch(`${API_URL}api/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -64,7 +64,7 @@ export const getProfile = async () => {
 
     if (!token || !userID) { throw new Error("No token or user ID found"); }
 
-    const response = await fetch (`${API_URL}/user/${userID}`,{
+    const response = await fetch (`${API_URL}api/user/${userID}`,{
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -84,3 +84,94 @@ export const getProfile = async () => {
     throw error;
   }
 };
+
+// FETCH DE CIUDADES Y RUTAS
+
+export const getCities = async () => {
+  try {
+    const response = await fetch (`${API_URL}api/cities`,{
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      throw new Error("Error fetching cities");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error getting cities:", error);
+    throw error;
+  }
+}
+
+export const getCityById = async (cityId) => {
+  try {
+    const response = await fetch (`${API_URL}api/cities/${cityId}`,{
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      throw new Error("Error fetching cities");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error getting cities:", error);
+    throw error;
+  }
+}
+
+
+export const getRouteById = async (RouteId) => {
+  try {
+    const response = await fetch (`${API_URL}api/routes/${RouteId}`,{
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      throw new Error("Error fetching route");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error getting route:", error);
+    throw error;
+  }
+}
+
+export const getRoutesByCityId = async (cityId) => {
+  try {
+    const response = await fetch (`${API_URL}cities/${cityId}/route`,{
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+
+    const data = response.json()
+
+    if (!response.ok) {
+      throw new Error("Error fetching routes");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error getting routes:", error);
+    throw error;
+  }
+}

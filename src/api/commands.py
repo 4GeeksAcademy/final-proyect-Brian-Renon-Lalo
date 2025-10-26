@@ -1,5 +1,6 @@
-
+from flask.cli import with_appcontext
 import click
+from seeder import seed_data
 from api.models import db, User
 
 """
@@ -28,6 +29,20 @@ def setup_commands(app):
             print("User: ", user.email, " created.")
 
         print("All test users created")
+
+    @app.cli.command("seed-db")
+    @with_appcontext
+    def seed_db():
+        """Ejecuta la función seed_data para poblar la DB."""
+        try:
+            seed_data(app)
+        except Exception as e:
+            # Captura y muestra errores de siembra
+            click.echo(f"❌ Error durante la siembra de datos: {e}")
+            return 1 # Devuelve un código de error
+        
+        click.echo("🎉 Siembra de datos completada exitosamente.")
+        return 0 # Devuelve un código de éxito
 
     @app.cli.command("insert-test-data")
     def insert_test_data():

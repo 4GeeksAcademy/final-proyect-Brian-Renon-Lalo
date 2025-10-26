@@ -2,11 +2,13 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 import os
+import sys
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from api.utils import APIException, generate_sitemap
-from api.models import db
+from api.models import db, User, City, Route
+from seeder import seed_data
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
@@ -26,13 +28,6 @@ app.url_map.strict_slashes = False
 CORS(api)
 
 
-app.config["JWT_SECRET_KEY"] = "Super_mega_secret_key" #change it pls
-app.config["JWT_ACCES_TOKEN_EXPIRES"] = timedelta(hours=4)
-jwt = JWTManager(app)
-
-
-
-
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
@@ -42,8 +37,32 @@ else:
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-MIGRATE = Migrate(app, db, compare_type=True)
+#si no va eliminar la linea de abajo
+app.config["SECRET_KEY"] = os.environ.get("FLASK_SECRET_KEY", "fallback-secret")
 db.init_app(app)
+MIGRATE = Migrate(app, db, compare_type=True)
+
+
+with app.app_context():
+    print("🛠️ Verificando y creando tablas de DB...")
+    db.create_all() 
+    print("✅ Tablas listas (incluida 'user').")
+
+    print("🌱 Sembrando datos iniciales (Cities, Routes, RoutePlaces)...")
+    try:
+        seed_data(app)
+        print("🎉 Datos iniciales sembrados con éxito.")
+    except Exception as e:
+        print(f"⚠️ Error al sembrar datos: {e}")
+    
+   
+
+app.config["JWT_SECRET_KEY"] = "Super_mega_secret_key" #change it pls
+app.config["JWT_ACCES_TOKEN_EXPIRES"] = timedelta(hours=4)
+jwt = JWTManager(app)
+
+
+CORS(app)
 
 # add the admin
 setup_admin(app)
@@ -78,6 +97,7 @@ def serve_any_other_file(path):
     response = send_from_directory(static_file_dir, path)
     response.cache_control.max_age = 0  # avoid cache memory
     return response
+
 
 
 # this only runs if `$ python src/main.py` is executed

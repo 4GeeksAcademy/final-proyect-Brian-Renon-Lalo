@@ -10,7 +10,7 @@ from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from datetime import timedelta
 
-api = Blueprint('api', __name__)
+api = Blueprint('api', __name__, url_prefix='/api')
 
 # Allow CORS requests to this API
 CORS(api)

@@ -12,13 +12,12 @@ body{
 footer {
     background-color: rgba(224, 142, 10, 0.527);
     width: 100%;
-    position: absolute;
-    bottom: 0%; 
 }
 /*=========Navbar=========*/
 
 .navbar{
     background: rgba(224, 142, 10, 0.527);
+    color: white;
 }
 .img-brand{
     zoom: 29%;
@@ -29,13 +28,18 @@ footer {
 }
 .navbar .logout{
     color: white;
-    background-color: rgb(194, 38, 38)
+    background-color: rgb(161, 30, 30);
 }
-/*=========Profile======*/
+.offcanvas-header{
+    background: rgba(224, 142, 10, 0.527);
+}
+.offcanvas-body{
+    background-image: url("../front/assets/img/rz-fondo-navbar.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
 
-.img-pin{
-    zoom: 55%;
-}
 
 /*==========Login========*/
 
@@ -62,6 +66,7 @@ footer {
     margin-bottom: 20%;
     padding: 10% ;
     border-radius: 5%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .form-container link{
     color:rgb(39, 127, 175);
@@ -81,6 +86,7 @@ footer {
     text-align: center;
     align-items: center;
     margin-top: 20%;
+    
 }
 .register-container .btn{
     background-color: rgb(39, 127, 175);
@@ -93,8 +99,35 @@ footer {
     margin-bottom: 20%;
     padding: 10% ;
     border-radius: 5%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .register-form-container link{
     color:rgb(39, 127, 175);
 }
 
+/*===========Home==========*/
+.img-pin{
+    zoom: 25%;
+}
+.color-rz{
+   color:rgb(39, 127, 175); 
+}
+.home-container{
+    background-color: rgba(224, 142, 10, 0.329);
+    border-radius: 15px;
+    padding: 3%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/*==========RZElection========*/
+.card .btn{
+    background-color: rgb(39, 127, 175);
+    color: white;
+    margin-bottom: 5%;
+}
+.card h3, h5 {
+    color: rgb(224, 142, 10);
+}
+.card-body  h6{
+    color: rgb(170, 110, 14);
+}

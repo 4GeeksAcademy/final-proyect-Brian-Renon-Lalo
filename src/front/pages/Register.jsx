@@ -20,7 +20,7 @@ export const Register = () => {
         setSuccess("");
 
         try{
-            const data = await register(email,password);
+            const data = await register(name,email,password);
             setSuccess("Register completed successfully ✅");
             setTimeout(() => {
             navigate("/login");

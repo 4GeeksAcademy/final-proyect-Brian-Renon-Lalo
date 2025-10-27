@@ -1,13 +1,13 @@
-const API_URL = import.meta.env.VIT_BACKEND_URL;
+const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 
 // User Register
 export const register = async (name, email, password) => {
   try {
-    const response = await fetch(`${API_URL}api/register`, {
+    const response = await fetch(`${API_URL}/api/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({name, email, password }),
+      body: JSON.stringify({ name, email, password }),
     });
 
     const data = await response.json();
@@ -26,7 +26,7 @@ export const register = async (name, email, password) => {
 // Login de usuario
 export const login = async (email, password, dispatch) => {
   try {
-    const response = await fetch(`${API_URL}api/login`, {
+    const response = await fetch(`${API_URL}/api/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -64,7 +64,7 @@ export const getProfile = async () => {
 
     if (!token || !userID) { throw new Error("No token or user ID found"); }
 
-    const response = await fetch (`${API_URL}api/user/${userID}`,{
+    const response = await fetch (`${API_URL}/api/user/${userID}`,{
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -89,7 +89,7 @@ export const getProfile = async () => {
 
 export const getCities = async () => {
   try {
-    const response = await fetch (`${API_URL}api/cities`,{
+    const response = await fetch (`${API_URL}/api/cities`,{
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -111,7 +111,7 @@ export const getCities = async () => {
 
 export const getCityById = async (cityId) => {
   try {
-    const response = await fetch (`${API_URL}api/cities/${cityId}`,{
+    const response = await fetch (`${API_URL}/api/cities/${cityId}`,{
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -134,7 +134,7 @@ export const getCityById = async (cityId) => {
 
 export const getRouteById = async (RouteId) => {
   try {
-    const response = await fetch (`${API_URL}api/routes/${RouteId}`,{
+    const response = await fetch (`${API_URL}/api/routes/${RouteId}`,{
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -156,7 +156,7 @@ export const getRouteById = async (RouteId) => {
 
 export const getRoutesByCityId = async (cityId) => {
   try {
-    const response = await fetch (`${API_URL}api/cities/${cityId}/routes`,{
+    const response = await fetch (`${API_URL}/api/cities/${cityId}/routes`,{
       method: "GET",
       headers: {
         "Content-Type": "application/json",

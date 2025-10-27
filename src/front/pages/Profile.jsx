@@ -32,7 +32,7 @@ export const Profile = () => {
 
     return (
         <div className="text-center mt-5">
-            <h2>Welcome to your Profile</h2>
+            <h2>Welcome to your Profile {user.name}</h2>
             <p className="lead">
                 <img src={rzBrand} className="img-fluid mb-3" />
             </p>

@@ -14,7 +14,7 @@ db = SQLAlchemy()
 class User(db.Model):
     __tablename__ ="user"
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(String(15))
+    name: Mapped[str] = mapped_column(String(15), nullable=False)
     email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False, default=True)
@@ -36,7 +36,7 @@ class User(db.Model):
         if User.query.filter_by(email=email).first():
             return None,"Email already registered."
         
-        new_user = User(name=name,email=email, password=password)
+        new_user = User(name=name, email=email, password=password)
         
         try:
             db.session.add(new_user)

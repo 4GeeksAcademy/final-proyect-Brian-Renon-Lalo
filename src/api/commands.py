@@ -33,7 +33,7 @@ def setup_commands(app):
 #-----------------comando seed--------------
     @app.cli.command("seed-db")
     @with_appcontext
-    def seed_data():
+    def seed_db():
         """Ejecuta la función seed_data para poblar la DB."""
         try:
             seed_data(app, SEED_DATA)

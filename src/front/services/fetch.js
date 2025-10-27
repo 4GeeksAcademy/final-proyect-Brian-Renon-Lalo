@@ -7,7 +7,7 @@ export const register = async (name, email, password) => {
     const response = await fetch(`${API_URL}api/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({name, email, password }),
     });
 
     const data = await response.json();
@@ -156,14 +156,14 @@ export const getRouteById = async (RouteId) => {
 
 export const getRoutesByCityId = async (cityId) => {
   try {
-    const response = await fetch (`${API_URL}cities/${cityId}/route`,{
+    const response = await fetch (`${API_URL}api/cities/${cityId}/routes`,{
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       }
     });
 
-    const data = response.json()
+    const data = await response.json()
 
     if (!response.ok) {
       throw new Error("Error fetching routes");

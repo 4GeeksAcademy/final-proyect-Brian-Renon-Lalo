@@ -42,7 +42,7 @@ app.config["SECRET_KEY"] = os.environ.get("FLASK_SECRET_KEY", "fallback-secret")
 db.init_app(app)
 MIGRATE = Migrate(app, db, compare_type=True)
 
-
+#-----------configuración para levantar el seed---------------
 with app.app_context():
     print("🛠️ Verificando y creando tablas de DB...")
     db.create_all() 

@@ -79,6 +79,9 @@ def get_single_user(user_id):
 
 
 #----------------endpoints de datos(cities y routes)-----------------------------------
+
+
+#------------------Get all cities--------------------------------
 @api.route('/cities', methods=['GET'])
 def get_cities():
     cities = db.session.execute(db.select(City)).scalars().all()
@@ -91,10 +94,10 @@ def get_cities():
 
 
 
-
+#-------------------Get city by ID--------------------------------- 
 @api.route('/cities/<int:city_id>', methods=['GET'])
 def get_single_city(city_id):
-    city = db.session.execute(db.select(City, city_id)).scalars().all()
+    city = db.session.get(City, city_id)
 
     if not city:
         return jsonify({"msg": "No city found in database"}), 404
@@ -104,7 +107,7 @@ def get_single_city(city_id):
 
 
 
-
+#------------------Get all routes-------------------------------
 @api.route('/routes', methods=['GET'])
 def get_all_routes():
     routes = db.session.execute(db.select(Route)).scalars().all()
@@ -118,8 +121,8 @@ def get_all_routes():
 
 
 
-
-@api.route('/cities/<int:city_id>/routes/<int:route_id>', methods=['GET'])
+#-------------------rutas especifíca dentro de una ciudad---------------------
+@api.route('/cities/<int:city_id>/routes', methods=['GET'])
 def get_routes_by_city(city_id):
 
     city = db.session.get(City, city_id)
@@ -141,6 +144,16 @@ def get_routes_by_city(city_id):
         "city_name": city.name,
         "routes": serialized_routes
     }), 200
+
+#--------------rutas por ID
+@api.route('/routes/<int:route_id>', methods=['GET'])
+def get_route_by_id(route_id):
+    route = db.session.get(Route, route_id)
+
+    if not route:
+        return jsonify({"msg": "No route found in database"}), 404
+
+    return jsonify(route.serialize()), 200
 
 
 

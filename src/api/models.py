@@ -127,7 +127,6 @@ class RoutePlace(db.Model):
     
     def serialize(self):
         return{
-            "id": self.id,
             "name": self.name,
             "day": self.day,
             "latitude": self.latitude,

@@ -10,7 +10,6 @@ export const RZElection = () => {
     const [loadingCities, setLoadingCities] = useState(true);
     const [error, setError] = useState(null);
     
-    // Estado para almacenar la URL de la imagen de cada ciudad { cityId: url, ... }
     const [cityImagesMap, setCityImagesMap] = useState({}); 
 
     const [routesByCity, setRoutesByCity] = useState({}); 

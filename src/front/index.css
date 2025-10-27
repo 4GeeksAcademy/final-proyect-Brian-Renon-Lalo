@@ -32,6 +32,7 @@ footer {
 }
 .offcanvas-header{
     background: rgba(224, 142, 10, 0.527);
+    color: black;
 }
 .offcanvas-body{
     background-image: url("../front/assets/img/rz-fondo-navbar.jpg");
@@ -125,7 +126,7 @@ footer {
     color: white;
     margin-bottom: 5%;
 }
-.card h3, h5 {
+.card-body  h3{
     color: rgb(224, 142, 10);
 }
 .card-body  h6{

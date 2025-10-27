@@ -1,41 +1,42 @@
-
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import String, Boolean,ForeignKey, Integer
+from sqlalchemy import String, Boolean,ForeignKey, Integer, Column, Float
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from typing import List
+from typing import List, Optional
 
 
 
 db = SQLAlchemy()
 
 
+#-------------Tablas SQL-------------------
 
 
-#Tablas
 class User(db.Model):
     __tablename__ ="user"
     id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(15), nullable=False)
     email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False, default=True)
-    places: Mapped [List["Place"]]=relationship(back_populates="user", cascade="all, delete-orphan")
-    
     
     def serialize(self) :
         return {
                 "id": self.id,
+                "name": self.name,
                 "email": self.email,
                 "is_active":self.is_active,          
                 }
     
-#metodo estatico CRUD
+
+
+#--------------------metodo estatico CRUD
     @staticmethod
-    def create_user(email,password):
+    def create_user(name, email, password):
 
         if User.query.filter_by(email=email).first():
             return None,"Email already registered."
-    
-        new_user = User(email=email, password=password)
+        
+        new_user = User(name=name, email=email, password=password)
         
         try:
             db.session.add(new_user)
@@ -45,7 +46,6 @@ class User(db.Model):
         except Exception as e:
             db.session.rollback()
             return None, f"Error creating user: {e}"
-
 
 
     @staticmethod
@@ -70,6 +70,7 @@ class User(db.Model):
                 return False, f"Error deleting user: {e}"
         return False, "User not found."
 
+#----------------------
 
 
 class City(db.Model) :
@@ -77,34 +78,62 @@ class City(db.Model) :
     id: Mapped[int] = mapped_column(primary_key=True)
     name:Mapped[str]= mapped_column(String(100),nullable=False, index=True)
     continent: Mapped [str]= mapped_column (String(20), nullable=True)
-    places: Mapped [List["Place"]]=relationship(back_populates="city", cascade="all, delete-orphan")
+    routes: Mapped[List["Route"]] = relationship(back_populates="city", cascade="all, delete-orphan")
+  
+    def __repr__(self):
+        return f'<City {self.name}>'
     
     def serialize(self):
         return {
                 "id": self.id,
                 "name": self.name,
-                "continent":self.continent
+                "continent":self.continent,
                 }
     
-        
 
-class Place(db.Model) :
-    __tablename__="place"
-    id: Mapped[int]= mapped_column(primary_key=True)
-    name: Mapped[str]=mapped_column(String(150),nullable=False)
-    level:Mapped[int]= mapped_column(Integer, nullable=False, default=1)
-    city_id: Mapped[int]= mapped_column(ForeignKey("city.id"),nullable=False)
-    user_id: Mapped[int]=mapped_column(ForeignKey("user.id"),nullable=True)
-    city: Mapped[City]= relationship(back_populates="places")
-    user: Mapped[User]= relationship(back_populates="places")
-   
-   
+class Route (db.Model) :
+    __tablename__="route"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(100), nullable=False)
+    city_id: Mapped[int] = mapped_column(ForeignKey("city.id"))
+    city: Mapped["City"] = relationship(back_populates="routes")
+    places: Mapped[List["RoutePlace"]] = relationship(back_populates="route", cascade="all, delete-orphan")
+    
+    def __repr__(self):
+        return f'Route: {self.name}'
+        
     def serialize(self):
-        return {
-                "id": self.id,
-                "name": self.name,
-                "level":self.level,
-                "city_id":self.city_id,
-                "user_id":self.user_id
-                }
+        
+        return{
+            "id": self.id,
+            "name": self.name,
+            "city_id": self.city_id,
+            "places": [place.serialize() for place in self.places]
+        }
+
+class RoutePlace(db.Model):
+    __tablename__="route_place"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(50), nullable=False)
+    day: Mapped[str] = mapped_column(String(50), nullable=True)
+    route_id: Mapped[int] = mapped_column(ForeignKey("route.id"))
+    route: Mapped["Route"] = relationship(back_populates="places")
+    latitude: Mapped[float] = mapped_column(db.Float, nullable=True)
+    longitude: Mapped[float] = mapped_column(db.Float, nullable=True)
+    
+    def __repr__(self):
+        route_name = self.route.name if self.route else "Unknown Route"
+        return f'Place:{self.name} | Day:{self.day} | Route:{route_name}'
+    
+    def serialize(self):
+        return{
+            "name": self.name,
+            "day": self.day,
+            "latitude": self.latitude,
+            "longitude": self.longitude,
+            "route_id": self.route_id,
+            "route": self.route.name if self.route else None
+        }
+
+
 

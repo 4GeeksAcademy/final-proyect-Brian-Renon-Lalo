@@ -91,6 +91,89 @@ SEED_DATA = [
                 }
             }
         ]
+    },
+
+    {"city": {"id": 2 , "name": "London", "continent": "Europe"},
+        "routes": [
+            {
+                "id": 4,
+                "name": "Ruta 1 (LON 24H )",
+                "city_id": 2,
+                "days": {
+                    "Day 1": [
+                        {"name": "Big Ben (Westminster Palace)", "latitude": 51.50067, "longitude": -0.12457},
+                        {"name": "Westminster Abbey",              "latitude": 51.4994,  "longitude": -0.127367},
+                        {"name": "London Eye",                     "latitude": 51.5033,  "longitude": -0.1194},
+                        {"name": "Trafalgar Square",               "latitude": 51.508045,"longitude": -0.128217},
+                        {"name": "Piccadilly Circus",              "latitude": 51.510067,"longitude": -0.133869},
+                        {"name": "Soho",                           "latitude": 51.513,   "longitude": -0.131},
+                        {"name": "Chinatown",                      "latitude": 51.511822,"longitude": -0.131695},
+                        {"name": "British Museum",                 "latitude": 51.519444444444, "longitude": -0.12694444444444},
+                        {"name": "St. Paul's Cathedral",           "latitude": 51.51387, "longitude": -0.098362},
+                        {"name": "Millennium Bridge",              "latitude": 51.510173,"longitude": -0.098438},
+                        {"name": "London Tower",                   "latitude": 51.5082,  "longitude": -0.076198055555556},
+                        {"name": "Tower Bridge",                   "latitude": 51.505555555556, "longitude": -0.075277777777778}
+                    ]
+                }
+            },
+
+             {
+                "id": 5,
+                "name": "Ruta 2 (LON 48H)",
+                "city_id": 2,
+                "days": {
+                    "Day 1": [
+                        {"name": "Buckingham Palace",              "latitude": 51.501476,"longitude": -0.140634,},
+                        {"name": "Hyde Park",                      "latitude": 51.50861, "longitude": -0.163611},
+                        {"name": "Natural History Museum",         "latitude": 51.496111111111, "longitude": -0.17611111111111},
+                        {"name": "Trafalgar Square",               "latitude": 51.508045,"longitude": -0.128217},
+                        {"name": "Piccadilly Circus",              "latitude": 51.510067,"longitude": -0.133869},
+                        {"name": "Soho",                           "latitude": 51.513,   "longitude": -0.131},
+                        {"name": "Chinatown",                      "latitude": 51.511822,"longitude": -0.131695}
+                    ],
+                    "Day 2": [
+                        {"name": "St. Paul's Cathedral",           "latitude": 51.51387, "longitude": -0.098362},
+                        {"name": "Millennium Bridge",              "latitude": 51.510173,"longitude": -0.098438},
+                        {"name": "The City of London",             "latitude": 51.51556, "longitude": -0.09306},
+                        {"name": "London Tower",                   "latitude": 51.5082,  "longitude": -0.076198055555556},
+                        {"name": "Tower Bridge",                   "latitude": 51.505555555556, "longitude": -0.075277777777778}
+                    ]
+                }
+            },
+            {
+                "id": 6,
+                "name": "Ruta 3 (LON 72H)",
+                "city_id": 2,
+                "days": {
+                    "Day 1": [
+                        {"name": "Buckingham Palace",              "latitude": 51.501476,"longitude": -0.140634},
+                        {"name": "Big Ben (Westminster Palace)",  "latitude": 51.50067, "longitude": -0.12457},
+                        {"name": "Westminster Abbey",              "latitude": 51.4994,  "longitude": -0.127367},
+                        {"name": "London Eye",                     "latitude": 51.5033,  "longitude": -0.1194},
+                        {"name": "Trafalgar Square",               "latitude": 51.508045,"longitude": -0.128217},
+                        {"name": "Piccadilly Circus",              "latitude": 51.510067,"longitude": -0.133869},
+                        {"name": "Soho",                           "latitude": 51.513,   "longitude": -0.131},
+                        {"name": "Chinatown",                      "latitude": 51.511822,"longitude": -0.131695}
+                    ],
+                    "Day 2": [
+                        {"name": "St. Paul's Cathedral",           "latitude": 51.51387, "longitude": -0.098362, "level": 2},
+                        {"name": "Millennium Bridge",              "latitude": 51.510173,"longitude": -0.098438, "level": 2},
+                        {"name": "The City of London",             "latitude": 51.51556, "longitude": -0.09306,  "level": 3},
+                        {"name": "London Tower",                   "latitude": 51.5082,  "longitude": -0.076198055555556 },
+                        {"name": "Tower Bridge",                   "latitude": 51.505555555556, "longitude": -0.075277777777778},
+                        {"name": "British Museum",                 "latitude": 51.519444444444, "longitude": -0.12694444444444}
+                    ],
+                    "Day 3": [
+                        {"name": "Camden Town",                    "latitude": 51.541,   "longitude": -0.1433},
+                        {"name": "St Pancras Station",             "latitude": 51.5318912,"longitude": -0.1268506},
+                        {"name": "Notting Hill",                   "latitude": 51.5109995,"longitude": -0.2055267},
+                        {"name": "Portobello Market",              "latitude": 51.5085,  "longitude": -0.2023},
+                        {"name": "Hyde Park",                      "latitude": 51.50861, "longitude": -0.163611},
+                        {"name": "Natural History Museum",         "latitude": 51.496111111111, "longitude": -0.17611111111111}
+                    ]
+                }
+            }
+        ]
     }
 ]   
 

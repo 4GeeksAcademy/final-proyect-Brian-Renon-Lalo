@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getCities, getRoutesByCityId } from "../services/fetch.js";
-import { getCityImageFromPexels } from "../services/api_img.js"
+import { getCityImageFromPexels, getRuteImageFromPexels } from "../services/api_img.js"
 import { useNavigate } from "react-router-dom"; 
 
  
@@ -14,7 +14,9 @@ export const RZElection = () => {
 
     const [routesByCity, setRoutesByCity] = useState({}); 
     const [activeCityId, setActiveCityId] = useState(null); 
-    const [loadingRoutes, setLoadingRoutes] = useState(false); 
+    const [loadingRoutes, setLoadingRoutes] = useState(false);
+    
+    const [routeImagesMap, setRouteImagesMap] = useState({});
     
     const navigate = useNavigate();
 
@@ -62,9 +64,25 @@ export const RZElection = () => {
             setLoadingRoutes(true);
             try {
                 const data = await getRoutesByCityId(cityId);
-                setRoutesByCity(prev => ({ ...prev, [cityId]: data.routes }));
+                const fetchedRoutes = data.routes;
+
+                const imagePromises = fetchedRoutes.map(async (route) => {
+                    const imageUrl = await getRuteImageFromPexels(route.name); 
+                    return { id: route.id, url: imageUrl };
+                });
+                
+                const imageResults = await Promise.all(imagePromises);
+                
+                const newRouteImages = imageResults.reduce((acc, item) => {
+                    acc[item.id] = item.url;
+                    return acc;
+                }, {});
+                
+                setRouteImagesMap(prev => ({ ...prev, ...newRouteImages }));
+                
+                setRoutesByCity(prev => ({ ...prev, [cityId]: fetchedRoutes }));
             } catch (err) {
-                console.error(`Error al obtener rutas para la ciudad ${cityId}:`, err);
+                console.error(`Error al obtener rutas o imágenes para la ciudad ${cityId}:`, err);
             } finally {
                 setLoadingRoutes(false);
             }
@@ -123,21 +141,34 @@ export const RZElection = () => {
                                 ) : (
                                     <div className="row">
                                         {routesByCity[city.id] && routesByCity[city.id].length > 0 ? (
-                                            routesByCity[city.id].map((route) => (
-                                                <div key={route.id} className="col-lg-4 col-md-6 mb-3">
-                                                    <div className="card h-100 shadow-sm">
-                                                        <div className="card-body">
-                                                            <h6 className="card-subtitle mb-2">{route.name}</h6>
-                                                            <button 
-                                                                className="btn btn-sm mt-2 w-100" 
-                                                                onClick={() => handleRouteSelection(route.id)}
-                                                            >
-                                                                Seleccionar Ruta
-                                                            </button>
+                                            routesByCity[city.id].map((route) => {
+                                                const routeImageUrl = routeImagesMap[route.id];
+                                                return (
+                                                    <div key={route.id} className="col-lg-4 col-md-6 mb-3">
+                                                        <div className="card h-100 shadow-sm">
+                                                            
+                                                            {routeImageUrl && (
+                                                                <img 
+                                                                    src={routeImageUrl} 
+                                                                    className="card-img-top" 
+                                                                    alt={`Imagen de ${route.name}`} 
+                                                                    style={{ height: '150px', objectFit: 'cover' }}
+                                                                />
+                                                            )}
+                                                            
+                                                            <div className="card-body">
+                                                                <h6 className="card-subtitle mb-2">{route.name}</h6>
+                                                                <button 
+                                                                    className="btn btn-sm mt-2 w-100" 
+                                                                    onClick={() => handleRouteSelection(route.id)}
+                                                                >
+                                                                    Seleccionar Ruta
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            ))
+                                                );
+                                            })
                                         ) : (
                                             <p className="col-12 text-muted">No hay rutas disponibles para esta ciudad.</p>
                                         )}

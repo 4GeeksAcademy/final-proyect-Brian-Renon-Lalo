@@ -272,7 +272,7 @@ return (
 
                 {/* ➡️ COLUMNA DERECHA: Mapa */}
                 <div className="col-lg-6 col-md-12 mb-4">
-                    <div className="card shadow-lg h-100 p-3">
+                    <div className="card shadow-lg p-3 sticky-top">
                         <div className="card-header bg-primary text-white text-center rounded-top p-3">
                             <h3 className="h5 mb-0">Ubicaciones en el Mapa 📍</h3>
                         </div>

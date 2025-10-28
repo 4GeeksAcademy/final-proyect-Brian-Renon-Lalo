@@ -64,10 +64,10 @@ export const Navbar = () => {
                                         <Link className="nav-link" to="/profile">Mi Perfil</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className="nav-link" to="/rzelection">Crear RutaZero</Link>
+                                        <Link className="nav-link" to="/rzelection">Selecciona RutaZero</Link>
 									</li>
                                     <li className="nav-item">
-                                        <Link className="nav-link" to="/">Tus RutasZero Guardadas</Link>
+                                        <Link className="nav-link" to="/">RutasZero Guardadas</Link>
                                     </li>
                                     <li className="nav-item">
                                         <button 

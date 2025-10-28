@@ -36,7 +36,7 @@ export const Home = () => {
 		<div className="text-center mt-5">
 			<div className="home-container">
 			<h2 className="display-5">⌚Es hora de aprovechar tu tiempo⌚</h2>
-			<h3 className="display-5"><span className="color-rz">RutaZero</span> te crea la ruta ideal para</h3>
+			<h4 className="display-6"><span className="color-rz">RutaZero</span> proporciona una ruta óptima para</h4>
 			<h4 className="display-6">no perderte los lugares más icónicos de cada ciudad</h4>
 			</div>
 			<p className="lead">

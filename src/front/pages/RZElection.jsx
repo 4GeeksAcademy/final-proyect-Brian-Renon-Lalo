@@ -99,7 +99,7 @@ export const RZElection = () => {
 
     return (
         <div className="container mt-5">
-            <h2 className="display-4 text-center mb-4">Selecciona tu Ruta por Ciudad</h2>
+            <h2 className="display-4 text-center mb-4">Selecciona tu <span className="color-rz">RutaZero</span> por Ciudad</h2>
             <hr />
             <div className="row justify-content-center">
                 {cities.map((city) => (

@@ -132,3 +132,12 @@ footer {
 .card-body  h6{
     color: rgb(170, 110, 14);
 }
+
+/*=========RZVista==========*/
+
+.badge{
+    background-color: rgba(224, 142, 10);
+}
+.bg-custom-blue {
+  background-color: rgb(39, 127, 175) !important;
+}

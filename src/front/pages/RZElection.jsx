@@ -63,11 +63,14 @@ export const RZElection = () => {
         if (!routesByCity[cityId]) {
             setLoadingRoutes(true);
             try {
+                const city = cities.find(c => c.id === cityId);
+                const cityName = city ? city.name : '';       
+
                 const data = await getRoutesByCityId(cityId);
                 const fetchedRoutes = data.routes;
 
-                const imagePromises = fetchedRoutes.map(async (route) => {
-                    const imageUrl = await getRuteImageFromPexels(route.name); 
+                const imagePromises = fetchedRoutes.map(async (route, index) => { 
+                    const imageUrl = await getRuteImageFromPexels(route.name, cityName, index); 
                     return { id: route.id, url: imageUrl };
                 });
                 

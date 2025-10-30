@@ -35,13 +35,13 @@ export const getCityImageFromPexels = async (cityName) => {
     }
 };
 
-export const getPlaceImageFromPexels = async (placeName, cityName) => {
+export const getPlaceImageFromPexels = async (cityName, placeName) => {
     if (!PEXELS_API_KEY) {
         console.warn("PEXELS_API_KEY no definida.");
         return null;
     }
 
-    const query = `${placeName} ${cityName}`; 
+    const query = `${cityName} ${placeName}`; 
     const apiUrl = `https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&orientation=landscape&size=medium&per_page=1`;
 
     try {
@@ -70,14 +70,14 @@ export const getPlaceImageFromPexels = async (placeName, cityName) => {
     }
 };
 
-export const getRuteImageFromPexels = async (cityName) => {
+export const getRuteImageFromPexels = async (routeName, cityName, index = 0) => {
     if (!PEXELS_API_KEY) {
         console.warn("PEXELS_API_KEY no definida.");
         return null;
     }
 
-    const query = `${cityName} street`;
-    const apiUrl = `https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&orientation=landscape&size=medium&per_page=1`;
+    const query = `${routeName} ${cityName} tourist attraction`;
+    const apiUrl = `https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&orientation=landscape&size=medium&per_page=5`;
 
     try {
         const response = await fetch(apiUrl, {
@@ -95,7 +95,9 @@ export const getRuteImageFromPexels = async (cityName) => {
         const data = await response.json();
 
         if (data.photos && data.photos.length > 0) {
-            return data.photos[0].src.medium; 
+            const photoIndex = index % data.photos.length;
+            
+            return data.photos[photoIndex].src.medium;
         }
 
         return null;

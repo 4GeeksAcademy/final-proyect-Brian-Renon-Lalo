@@ -34,7 +34,7 @@ export const Login = () => {
             console.log("User logued:", data);
 
             setTimeout(() => {
-                navigate("/rzelection");
+                navigate("/profile");
             },1000);
             
             } catch (err) {

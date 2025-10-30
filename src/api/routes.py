@@ -3,6 +3,8 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 import bcrypt
+import os
+from werkzeug.utils import secure_filename
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, City, Route
@@ -10,12 +12,14 @@ from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from datetime import timedelta
 
+
 api = Blueprint('api', __name__, url_prefix='/api')
 
-# Allow CORS requests to this API
+
+
 CORS(api)
 
-
+#------------------------Endpoint login, register, edit profile---------------------
 @api.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
@@ -61,7 +65,7 @@ def login():
     return jsonify({"token": token, "user": user.serialize()}), 200
 
 
-@api.route('/user/<user_id>', methods=['GET'])
+@api.route('/user/<int:user_id>', methods=['GET', 'PATCH'])
 @jwt_required()
 def get_single_user(user_id):
     current_user_id = get_jwt_identity()
@@ -69,19 +73,92 @@ def get_single_user(user_id):
     if str(current_user_id) != str(user_id):
         return jsonify({"msg": "Access denied"}), 403
     
-    user = User.get_user_by_id(user_id)
+    user = db.session.get(User, user_id)
     
     if user is None:
         return jsonify({"msg": "User not found"}), 404
     
+    if request.method == 'GET':
+        return jsonify(user.serialize()), 200
+    
+    elif request.method == 'PATCH':
+        data = request.get_json()
+        new_name = data.get("name")
+        new_email = data.get("email")
+
+        if new_email and new_email != user.email:
+            if User.query.filter_by(email=new_email).first():
+                return({"msg": "Email already taken"}), 400
+            user.email = new_email
+
+        if new_name:
+            user.name = new_name
+        
+        try:
+            db.session.commit()
+            return jsonify(user.serialize()), 200
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"msg": f"Database error during profile update: ${str(e)}"}), 500
+    
     return jsonify(user.serialize()), 200
+
+@api.route('/user/<int:user_id>/photo', methods=['PATCH'])
+@jwt_required()
+def upload_user_photo(user_id):
+    current_user_id = get_jwt_identity()
+
+    if str(current_user_id) != str(user_id):
+        return jsonify({"msg":"Access denied"}), 403
+    
+    user = db.session.get(User, user_id)
+    if user is None:
+        return jsonify({"msg":"User not found"}), 404
+    
+    data = request.get_json()
+    base64_image= data.get("base64_image")
+
+    if not base64_image:
+        return jsonify({"msg": "No Base64 image data provided"}), 400
+    
+    try:
+        user.profile_picture_url = base64_image
+        db.session.commit()
+        return jsonify(user.serialize()), 200
+    
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error guardando Base64: {str(e)}")
+        return jsonify({"msg": f"Error saving profile picture: {str(e)}"}),500
+    
+
+
+@api.route('/user/<int:user_id>/saved-routes', methods=['GET'])
+@jwt_required()
+def get_user_saved_routes(user_id):
+    current_user_id = get_jwt_identity()        
+
+    if str(current_user_id) != str(user_id):
+        return jsonify({"msg": "Forbidden: Cannot access other user's saved routes"}), 403
+
+    user = db.session.get(User, user_id)
+    if user is None:
+        return jsonify({"msg": "User not found"}), 404
+
+    saved_routes = user.saved_routes.all()
+
+    routes_data = [route.serialize_basic() for route in saved_routes]
+
+    return jsonify({"routes": routes_data}), 200
+    
+
 
 
 
 #----------------endpoints de datos(cities y routes)-----------------------------------
 
 
-#------------------Get all cities--------------------------------
+
 @api.route('/cities', methods=['GET'])
 def get_cities():
     cities = db.session.execute(db.select(City)).scalars().all()
@@ -94,7 +171,7 @@ def get_cities():
 
 
 
-#-------------------Get city by ID--------------------------------- 
+
 @api.route('/cities/<int:city_id>', methods=['GET'])
 def get_single_city(city_id):
     city = db.session.get(City, city_id)
@@ -107,7 +184,7 @@ def get_single_city(city_id):
 
 
 
-#------------------Get all routes-------------------------------
+
 @api.route('/routes', methods=['GET'])
 def get_all_routes():
     routes = db.session.execute(db.select(Route)).scalars().all()
@@ -121,7 +198,7 @@ def get_all_routes():
 
 
 
-#-------------------rutas especifíca dentro de una ciudad---------------------
+
 @api.route('/cities/<int:city_id>/routes', methods=['GET'])
 def get_routes_by_city(city_id):
 
@@ -136,7 +213,7 @@ def get_routes_by_city(city_id):
     if not routes:
         return jsonify({"msg": f"No routes found for city {city.name}"}), 404
 
-    # toma el objeto de la base de datos (r) y convertirlo en un diccionario de Python
+    
     serialized_routes = [r.serialize() for r in routes]
 
     return jsonify({
@@ -145,7 +222,7 @@ def get_routes_by_city(city_id):
         "routes": serialized_routes
     }), 200
 
-#--------------rutas por ID
+
 @api.route('/routes/<int:route_id>', methods=['GET'])
 def get_route_by_id(route_id):
     route = db.session.get(Route, route_id)

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom"; 
-import { getRouteById } from "../services/fetch.js"; 
-import { getPlaceImageFromPexels } from "../services/api_img.js";
+import { getRouteById, saveRoute, unsaveRoute, isRouteSaved } from "../services/fetch.js";
+import { getPlaceImageFromPexels } from "../services/api_img.js"
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from 'leaflet';
@@ -66,6 +66,8 @@ export const RZVista = () => {
     const [error, setError] = useState(null);
     const [dayImages, setDayImages] = useState({}); 
     const [selectedPlace, setSelectedPlace] = useState(null);
+
+    const [isSaved, setIsSaved] = useState(false);
     
     
     const allPlaces = useMemo(() => {
@@ -96,11 +98,36 @@ export const RZVista = () => {
         navigate(-1); 
     };
 
+    const handleSaveRoute = async () => {
+        if (!routeID_Int) return;
+
+        try {
+            if (isSaved) {
+                // 💡 Lógica para DESGUARDAR (Unsave)
+                await unsaveRoute(routeID_Int);
+                setIsSaved(false);
+                alert("Ruta quitada de tus favoritos. 💔");
+            } else {
+                // 💡 Lógica para GUARDAR (Save)
+                await saveRoute(routeID_Int);
+                setIsSaved(true);
+                alert("Ruta guardada exitosamente. 🎉");
+            }
+        } catch (err) {
+            console.error(`Error al ${isSaved ? 'desguardar' : 'guardar'} la ruta:`, err);
+            alert(`Error de API: ${err.message}`);
+        }
+    };
+
     useEffect(() => {
         const fetchRouteData = async () => {
             if (!routeID_Int) return;
 
+            setLoading(true);
+            setError(null);
+
             try {
+                // 1. Cargar los datos de la ruta
                 const data = await getRouteById(routeID_Int);
                 if (!data) {
                     setError("Ruta no encontrada.");
@@ -108,6 +135,12 @@ export const RZVista = () => {
                     return;
                 }
                 
+                // 2. 💡 Verificar el estado inicial de la ruta guardada
+                // Esto previene el error 409 al intentar guardar algo que ya está guardado.
+                const savedStatus = await isRouteSaved(routeID_Int);
+                setIsSaved(savedStatus);
+                
+                // 3. Estructurar y establecer la ruta
                 const placesToStructure = data.places || [];
                 const structuredRoute = {
                     ...data,
@@ -120,13 +153,15 @@ export const RZVista = () => {
                     setSelectedPlace(placesToStructure[0]);
                 }
                 
+                // 4. Cargar imágenes por día
                 const days = structuredRoute.days;
                 const imageMapPromises = Object.keys(days).map(async (dayName) => {
                     const places = days[dayName];
                     if (places.length > 0) {
                         const randomIndex = Math.floor(Math.random() * places.length);
                         const randomPlaceName = places[randomIndex].name;
-                        const imageUrl = await getPlaceImageFromPexels(randomPlaceName);
+                        // ¡Aquí se llama a la función que causaba el error ReferenceError!
+                        const imageUrl = await getPlaceImageFromPexels(randomPlaceName); 
                         return { day: dayName, url: imageUrl };
                     }
                     return { day: dayName, url: null }; 
@@ -143,7 +178,8 @@ export const RZVista = () => {
 
             } catch (err) {
                 console.error("Error al cargar la ruta o imágenes:", err);
-                setError("Error al cargar los detalles de la ruta.");
+                // Aquí capturas cualquier error, incluido el CORS o el 500 inicial en isRouteSaved
+                setError(`Error al cargar los detalles de la ruta: ${err.message}`); 
             } finally {
                 setLoading(false);
             }
@@ -185,7 +221,16 @@ export const RZVista = () => {
                         <span className="color-rz">RutaZero</span> Detallada: {route.name} </h6>
                     <p className="lead text-muted mb-0">Duración: {totalDays} día(s)</p>
                 </div>
+                <button
+                    className={`btn ${isSaved ? 'btn-success' : 'btn-outline-success'}`}
+                    onClick={handleSaveRoute}
+                    disabled={!routeID_Int} // Deshabilitar si no tenemos routeId
+                >
+                    <i className={`bi ${isSaved ? 'bi-bookmark-fill' : 'bi-bookmark'}`}></i> 
+                    {isSaved ? ' Ruta Guardada' : ' Guardar Ruta'}
+                </button>
             </div>
+            
             
             <hr />
 

@@ -22,7 +22,7 @@ class User(db.Model):
     password: Mapped[str] = mapped_column(nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False, default=True)
     profile_picture_url = db.Column(db.Text, default=DEFAULT_AVATAR_URL)
-    saved_routes: Mapped[List["Route"]] = relationship(secondary="saved_user_routes", backref=db.backref('savers', lazy='dynamic'), lazy='dynamic')
+    saved_routes: Mapped[List["Route"]] = relationship(secondary="saved_user_routes", lazy='dynamic', overlaps='savers')
     saved_route_links: Mapped[List["SavedRoute"]] = relationship(back_populates="user", cascade="all, delete-orphan", overlaps="saved_routes, savers")
     
     def serialize(self) :
@@ -126,6 +126,15 @@ class Route (db.Model) :
     
     def __repr__(self):
         return f'Route: {self.name}'
+    
+    # 💡 ESTE ES EL MÉTODO QUE FALTA Y DEBES AÑADIR:
+    def serialize_basic(self):
+        # Devuelve la información esencial para mostrar la lista de rutas guardadas
+        return {
+            "id": self.id,
+            "name": self.name,
+            "city_name": self.city.name if self.city else "N/A" 
+        }
         
     def serialize(self):
         

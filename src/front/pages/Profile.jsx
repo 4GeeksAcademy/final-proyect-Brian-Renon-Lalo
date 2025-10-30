@@ -208,7 +208,7 @@ export const Profile = () => {
                     </div>
                     <div className="container ">
                         <div className="row justify-content-center">
-                            <Link to="/">
+                            <Link to="/savedroutes">
                                 <button className="btn btn-primary text-white">RutasZero Guardadas</button>
                             </Link>
                         </div>    

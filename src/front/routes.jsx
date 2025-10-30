@@ -14,6 +14,7 @@ import { Login } from "./pages/Login";
 import { Profile } from "./pages/Profile";
 import { RZElection } from "./pages/RZElection";
 import { RZVista } from "./pages/RZVista";
+import { SavedRoutes } from "./pages/SavedRoutes";
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -35,6 +36,7 @@ export const router = createBrowserRouter(
         <Route path="/profile" element={<Profile />} />
         <Route path="/rzelection" element={<RZElection />} />
         <Route path="/routes/:routeId" element={<RZVista />} />
+        <Route path="/savedroutes" element={<SavedRoutes />} />
         
       </Route>
     )

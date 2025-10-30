@@ -112,7 +112,7 @@ export const RZElection = () => {
                             <div className="row g-0">
                                 <div className="col-md-4">
                                     <img 
-                                        src={cityImagesMap[city.id] || PLACEHOLDER_IMAGE} 
+                                        src={cityImagesMap[city.id]} 
                                         className="img-fluid rounded-start" 
                                         alt={`Imagen de ${city.name}`} 
                                         style={{ height: '100%', objectFit: 'cover' }}

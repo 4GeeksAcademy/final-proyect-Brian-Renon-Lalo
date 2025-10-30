@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import String, Boolean,ForeignKey, Integer, Column, Float
+from sqlalchemy import Table, String, Boolean,ForeignKey, Integer, Column, Float
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from typing import List, Optional
 
@@ -7,29 +7,35 @@ from typing import List, Optional
 
 db = SQLAlchemy()
 
+DEFAULT_AVATAR_URL ="/profile_pictures/rz-profile-img.png"
 
-#-------------Tablas SQL-------------------
+
+
 
 
 class User(db.Model):
     __tablename__ ="user"
+    __allow_unmapped__ = True
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(15), nullable=False)
     email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False, default=True)
+    profile_picture_url = db.Column(db.Text, default=DEFAULT_AVATAR_URL)
+    saved_routes: Mapped[List["Route"]] = relationship(secondary="saved_user_routes", backref=db.backref('savers', lazy='dynamic'), lazy='dynamic')
+    saved_route_links: Mapped[List["SavedRoute"]] = relationship(back_populates="user", cascade="all, delete-orphan", overlaps="saved_routes, savers")
     
     def serialize(self) :
         return {
                 "id": self.id,
                 "name": self.name,
                 "email": self.email,
-                "is_active":self.is_active,          
+                "is_active":self.is_active, 
+                "profile_picture_url": self.profile_picture_url,
+                "saved_routes_count": self.saved_routes.count()         
                 }
     
 
-
-#--------------------metodo estatico CRUD
     @staticmethod
     def create_user(name, email, password):
 
@@ -70,7 +76,25 @@ class User(db.Model):
                 return False, f"Error deleting user: {e}"
         return False, "User not found."
 
-#----------------------
+
+
+class SavedRoute(db.Model): 
+    __tablename__='saved_user_routes'
+    user_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
+    route_id = Column(Integer, ForeignKey('route.id'), primary_key=True)
+    user: Mapped["User"] = relationship(back_populates="saved_route_links", overlaps="savers,saved_routes")
+    route: Mapped["Route"] = relationship(back_populates="savers_links", overlaps="saved_routes, savers")
+    
+    def __repr__(self):
+        return f'<SavedRoute User: {self.user_id} => Route:{self.route_id}>'
+    
+    def serialize_basic(self):
+        return {
+            "user_id": self.user_id,
+            "route_id": self.route_id
+        }
+
+
 
 
 class City(db.Model) :
@@ -98,6 +122,7 @@ class Route (db.Model) :
     city_id: Mapped[int] = mapped_column(ForeignKey("city.id"))
     city: Mapped["City"] = relationship(back_populates="routes")
     places: Mapped[List["RoutePlace"]] = relationship(back_populates="route", cascade="all, delete-orphan")
+    savers_links: Mapped[List["SavedRoute"]] = relationship(back_populates="route", cascade="all, delete-orphan", overlaps="saved_routes, savers")
     
     def __repr__(self):
         return f'Route: {self.name}'

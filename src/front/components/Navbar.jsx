@@ -67,7 +67,7 @@ export const Navbar = () => {
                                         <Link className="nav-link" to="/rzelection">Selecciona RutaZero</Link>
 									</li>
                                     <li className="nav-item">
-                                        <Link className="nav-link" to="/">RutasZero Guardadas</Link>
+                                        <Link className="nav-link" to="/savedroutes">RutasZero Guardadas</Link>
                                     </li>
                                     <li className="nav-item">
                                         <button 

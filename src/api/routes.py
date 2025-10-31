@@ -20,6 +20,7 @@ api = Blueprint('api', __name__, url_prefix='/api')
 CORS(api)
 
 #------------------------Endpoint login, register, edit profile---------------------
+
 @api.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
@@ -131,12 +132,14 @@ def upload_user_photo(user_id):
         print(f"Error guardando Base64: {str(e)}")
         return jsonify({"msg": f"Error saving profile picture: {str(e)}"}),500
     
+#----------------endpoints de datos(cities y routes)-----------------------------------
 
 
-@api.route('/user/<int:user_id>/saved-routes', methods=['GET'])
+@api.route('/user/<int:user_id>/saved-routes', methods=['GET', 'POST'])
 @jwt_required()
+
 def get_user_saved_routes(user_id):
-    current_user_id = get_jwt_identity()        
+    current_user_id = get_jwt_identity()
 
     if str(current_user_id) != str(user_id):
         return jsonify({"msg": "Forbidden: Cannot access other user's saved routes"}), 403
@@ -144,19 +147,81 @@ def get_user_saved_routes(user_id):
     user = db.session.get(User, user_id)
     if user is None:
         return jsonify({"msg": "User not found"}), 404
+    
+    if request.method == 'POST':
+        data = request.get_json()
+        route_id_to_save = data.get("route_id")
 
-    saved_routes = user.saved_routes.all()
+        if not route_id_to_save:
+            return jsonify({"msg": "Missing 'route_id' in request body"}), 400
 
+        route_to_save = db.session.get(Route, route_id_to_save)
+        if route_to_save is None:
+            return jsonify({"msg": "Route not found"}), 404
+
+        if route_to_save in user.saved_routes:
+            return jsonify({"msg": "Route already saved"}), 409 
+
+        try:
+            user.saved_routes.append(route_to_save)
+            db.session.commit()
+            return jsonify({"msg": "Route successfully saved"}), 201 # Creado
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"msg": f"Database error during save: {str(e)}"}), 500
+    
+    saved_routes = user.saved_routes
     routes_data = [route.serialize_basic() for route in saved_routes]
 
     return jsonify({"routes": routes_data}), 200
+
+@api.route('/user/<int:user_id>/saved-routes/<int:route_id>', methods=['DELETE'])
+@jwt_required()
+def unsave_route(user_id, route_id):
+    current_user_id = get_jwt_identity()
+
+    if str(current_user_id) != str(user_id):
+        return jsonify({"msg": "Forbidden: Cannot modify other user's saved routes"}), 403
+
+    user = db.session.get(User, user_id)
+    if user is None:
+        return jsonify({"msg": "User not found"}), 404
+
+    route_to_unsave = db.session.get(Route, route_id)
+    if route_to_unsave is None:
+        return jsonify({"msg": "Route not found"}), 404
+
+    if route_to_unsave not in user.saved_routes:
+        return jsonify({"msg": "Route was not saved, nothing to delete"}), 200 
+
+    try:
+        user.saved_routes.remove(route_to_unsave)
+        db.session.commit()
+        return jsonify({"msg": "Route successfully removed from saved list"}), 200 
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"msg": f"Database error during unsave: {str(e)}"}), 500
     
+@api.route('/user/<int:user_id>/saved-routes/status/<int:route_id>', methods=['GET'])
+@jwt_required()
+def check_route_saved_status(user_id, route_id):
+    current_user_id = get_jwt_identity()
 
+    if str(current_user_id) != str(user_id):
+        return jsonify({"msg": "Forbidden: Cannot access other user's data"}), 403
 
+    user = db.session.get(User, user_id)
+    if user is None:
+        return jsonify({"msg": "User not found"}), 404
 
+    route_to_check = db.session.get(Route, route_id)
+    if route_to_check is None:
+        return jsonify({"is_saved": False, "msg": "Route not found in system"}), 404
 
-#----------------endpoints de datos(cities y routes)-----------------------------------
-
+    if route_to_check in user.saved_routes:
+        return jsonify({"is_saved": True, "msg": "Route is saved"}), 200
+    else:
+        return jsonify({"is_saved": False, "msg": "Route is not saved"}), 200
 
 
 @api.route('/cities', methods=['GET'])
@@ -170,8 +235,6 @@ def get_cities():
     return jsonify(serialized_cities), 200
 
 
-
-
 @api.route('/cities/<int:city_id>', methods=['GET'])
 def get_single_city(city_id):
     city = db.session.get(City, city_id)
@@ -180,9 +243,6 @@ def get_single_city(city_id):
         return jsonify({"msg": "No city found in database"}), 404
 
     return jsonify(city.serialize()), 200
-
-
-
 
 
 @api.route('/routes', methods=['GET'])
@@ -194,9 +254,6 @@ def get_all_routes():
 
     serialized_routes = [route.serialize() for route in routes]
     return jsonify(serialized_routes), 200
-
-
-
 
 
 @api.route('/cities/<int:city_id>/routes', methods=['GET'])

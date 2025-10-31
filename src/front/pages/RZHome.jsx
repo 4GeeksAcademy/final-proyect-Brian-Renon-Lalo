@@ -1,8 +1,9 @@
 import React, { useEffect } from "react"
-import rzPin from "../assets/img/rz-pin.png";
+import rzHome from "../assets/img/rz-home.png";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import { Link } from "react-router-dom"; 
 
-export const Home = () => {
+export const RZHome = () => {
 
 	const { store, dispatch } = useGlobalReducer()
 
@@ -33,19 +34,21 @@ export const Home = () => {
 	}, [])
 
 	return (
-		<div className="text-center mt-5">
-			<div className="home-container">
-			<h2 className="display-5">⌚Es hora de aprovechar tu tiempo⌚</h2>
-			<h4 className="display-6"><span className="color-rz">RutaZero</span> proporciona una ruta óptima para</h4>
-			<h4 className="display-6">no perderte los lugares más icónicos de cada ciudad</h4>
+		<div className="text-center justify-content-center aling-items-center mt-5">
+			
+				<img src={rzHome} className="img-logo" />
+			
+			<div className="info-container">
+			<h3 className="display-1">Optimiza tu tiempo</h3>
+			<h3 className="display-1">en cada ciudad</h3>
+			<p className="display-6"><span className="color-rz">RutaZero</span> te proporciona la mejor ruta para aprovechar</p>
+			<p className="display-6">al máximo tus horas sin perder lugares clave</p>
 			</div>
-			<p className="lead">
-				<img src={rzPin} className="img-pin" />
-			</p>
+			
 			<div className="home-container">
-			<h4 className="display-6">¡ <span className="color-rz">RutaZero</span> está diseñada para aquellos viajes express,</h4>
-			<h4 className="display-6">viajes de negocios o escalas entre viajes!</h4>
+			<h4 className="display-6">¡Entra en <Link to="/login" className="home-login"><span className="color-rz">RutaZero</span></Link>!</h4>
 			</div>
+			<p className="display-6">Hecho para viajeros rápidos, curiosos y estratégicos.</p>
 
 			<div className="alert alert-info">
 				{store.message ? (

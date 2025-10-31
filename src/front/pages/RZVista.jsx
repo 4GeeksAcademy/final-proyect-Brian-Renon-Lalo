@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom"; 
-import { getRouteById } from "../services/fetch.js"; 
-import { getPlaceImageFromPexels } from "../services/api_img.js";
+import { getRouteById, saveRoute, unsaveRoute, isRouteSaved } from "../services/fetch.js";
+import { getPlaceImageFromPexels } from "../services/api_img.js"
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from 'leaflet';
@@ -66,6 +66,8 @@ export const RZVista = () => {
     const [error, setError] = useState(null);
     const [dayImages, setDayImages] = useState({}); 
     const [selectedPlace, setSelectedPlace] = useState(null);
+
+    const [isSaved, setIsSaved] = useState(false);
     
     
     const allPlaces = useMemo(() => {
@@ -96,9 +98,31 @@ export const RZVista = () => {
         navigate(-1); 
     };
 
+    const handleSaveRoute = async () => {
+        if (!routeID_Int) return;
+
+        try {
+            if (isSaved) {
+                await unsaveRoute(routeID_Int);
+                setIsSaved(false);
+                alert("Ruta quitada de tus favoritos. 💔");
+            } else {
+                await saveRoute(routeID_Int);
+                setIsSaved(true);
+                alert("Ruta guardada exitosamente. 🎉");
+            }
+        } catch (err) {
+            console.error(`Error al ${isSaved ? 'desguardar' : 'guardar'} la ruta:`, err);
+            alert(`Error de API: ${err.message}`);
+        }
+    };
+
     useEffect(() => {
         const fetchRouteData = async () => {
             if (!routeID_Int) return;
+
+            setLoading(true);
+            setError(null);
 
             try {
                 const data = await getRouteById(routeID_Int);
@@ -107,6 +131,9 @@ export const RZVista = () => {
                     setLoading(false);
                     return;
                 }
+                
+                const savedStatus = await isRouteSaved(routeID_Int);
+                setIsSaved(savedStatus);
                 
                 const placesToStructure = data.places || [];
                 const structuredRoute = {
@@ -126,7 +153,8 @@ export const RZVista = () => {
                     if (places.length > 0) {
                         const randomIndex = Math.floor(Math.random() * places.length);
                         const randomPlaceName = places[randomIndex].name;
-                        const imageUrl = await getPlaceImageFromPexels(randomPlaceName);
+                        // ¡Aquí se llama a la función que causaba el error ReferenceError!
+                        const imageUrl = await getPlaceImageFromPexels(randomPlaceName); 
                         return { day: dayName, url: imageUrl };
                     }
                     return { day: dayName, url: null }; 
@@ -143,7 +171,7 @@ export const RZVista = () => {
 
             } catch (err) {
                 console.error("Error al cargar la ruta o imágenes:", err);
-                setError("Error al cargar los detalles de la ruta.");
+                setError(`Error al cargar los detalles de la ruta: ${err.message}`); 
             } finally {
                 setLoading(false);
             }
@@ -168,7 +196,7 @@ export const RZVista = () => {
                     className="text-secondary-bg" 
                     onClick={handleGoBack}
                 >
-                    <p>&larr; Volver a selección de rutas</p>
+                    <p>&larr; Volver atrás</p>
                 </div>
             <div className="mb-4 d-flex justify-content-between align-items-center">
                 
@@ -185,7 +213,17 @@ export const RZVista = () => {
                         <span className="color-rz">RutaZero</span> Detallada: {route.name} </h6>
                     <p className="lead text-muted mb-0">Duración: {totalDays} día(s)</p>
                 </div>
+                <button
+                    className="btn text-white"
+                    style={isSaved ? { backgroundColor: 'rgba(224, 142, 10)'} : { backgroundColor: 'rgb(39, 127, 175)'}}
+                    onClick={handleSaveRoute}
+                    disabled={!routeID_Int} 
+                >
+                    <i className={`bi ${isSaved ? 'bi-bookmark-fill' : 'bi-bookmark'}`}></i> 
+                    {isSaved ? ' Ruta Guardada' : ' Guardar Ruta'}
+                </button>
             </div>
+            
             
             <hr />
 

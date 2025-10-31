@@ -127,9 +127,8 @@ class Route (db.Model) :
     def __repr__(self):
         return f'Route: {self.name}'
     
-    # 💡 ESTE ES EL MÉTODO QUE FALTA Y DEBES AÑADIR:
     def serialize_basic(self):
-        # Devuelve la información esencial para mostrar la lista de rutas guardadas
+        
         return {
             "id": self.id,
             "name": self.name,

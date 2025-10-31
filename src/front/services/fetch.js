@@ -56,6 +56,7 @@ export const login = async (email, password, dispatch) => {
   }
 };
 
+//Obtener perfil
 
 export const getProfile = async () => {
   try {
@@ -116,6 +117,8 @@ export const updateProfile = async ( name, email) => {
     }
 };
 
+//Subir foto
+
 export const uploadUserPhotoBase64 = async (base64Image) => {
   const userID = localStorage.getItem("user_id");
   const API_URL_PHOTO = `${import.meta.env.VITE_BACKEND_URL}/api/user/${userID}/photo`;
@@ -139,6 +142,8 @@ export const uploadUserPhotoBase64 = async (base64Image) => {
     
     return await response.json();
 }
+
+//obtener rutas guardadas
 
 export const getSavedRoutes = async () => {
     try {
@@ -171,6 +176,8 @@ export const getSavedRoutes = async () => {
   }
 };
 
+//guardar rutas
+
 export const saveRoute = async (routeId) => {
     try {
         const token = localStorage.getItem("token");
@@ -181,18 +188,17 @@ export const saveRoute = async (routeId) => {
         }
 
         const response = await fetch(`${API_URL}/api/user/${userID}/saved-routes`, {
-            method: "POST", // Usamos POST para crear la asociación de 'ruta guardada'
+            method: "POST", 
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({ route_id: routeId }), // Enviamos el ID de la ruta
+            body: JSON.stringify({ route_id: routeId }), 
         });
 
         const data = await response.json();
 
         if (!response.ok) {
-            // Manejar errores como ruta ya guardada, etc.
             throw new Error(data.msg || "Error saving route");
         }
 
@@ -203,6 +209,8 @@ export const saveRoute = async (routeId) => {
     }
 };
 
+//eliminar ruta guardada
+
 export const unsaveRoute = async (routeId) => {
     try {
         const token = localStorage.getItem("token");
@@ -212,7 +220,6 @@ export const unsaveRoute = async (routeId) => {
             throw new Error("No token or user ID found. User not logged.");
         }
 
-        // Usamos DELETE y enviamos el ID de la ruta en la URL.
         const response = await fetch(`${API_URL}/api/user/${userID}/saved-routes/${routeId}`, {
             method: "DELETE", 
             headers: {
@@ -221,7 +228,6 @@ export const unsaveRoute = async (routeId) => {
             },
         });
 
-        // 204 No Content o 200 OK son respuestas comunes de DELETE.
         if (response.status === 204) { 
             return { msg: "Route successfully unsaved" };
         }
@@ -232,12 +238,14 @@ export const unsaveRoute = async (routeId) => {
             throw new Error(data.msg || "Error unsaving route");
         }
 
-        return data; // Puede retornar un mensaje de éxito con 200 si el backend lo hace así
+        return data; 
     } catch (error) {
         console.error("Error in unsaveRoute:", error);
         throw error;
     }
 };
+
+//comprobar rutas guardadas
 
 export const isRouteSaved = async (routeId) => {
     try {
@@ -248,7 +256,6 @@ export const isRouteSaved = async (routeId) => {
             return false;
         }
 
-        // Endpoint: /api/user/{userID}/saved-routes/status/{routeId}
         const response = await fetch(`${API_URL}/api/user/${userID}/saved-routes/status/${routeId}`, {
             method: "GET",
             headers: {
@@ -256,7 +263,6 @@ export const isRouteSaved = async (routeId) => {
             },
         });
 
-        // Manejar el caso de que la ruta o el usuario no existan (404)
         if (response.status === 404) {
             return false;
         }
@@ -265,7 +271,6 @@ export const isRouteSaved = async (routeId) => {
             throw new Error(`Failed to check saved status (Status: ${response.status})`);
         }
         
-        // El backend devuelve { "is_saved": true/false, ... }
         const data = await response.json(); 
         return data.is_saved;
 

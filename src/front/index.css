@@ -134,7 +134,7 @@ footer {
 }
 
 /*==========RZElection========*/
-.card .btn{
+.vista-card-btn .btn{
     background-color: rgb(39, 127, 175);
     color: white;
     margin-bottom: 5%;
@@ -146,6 +146,7 @@ footer {
     color: rgb(170, 110, 14);
 }
 
+
 /*=========RZVista==========*/
 
 .badge{
@@ -153,4 +154,21 @@ footer {
 }
 
 
+/*==========Profile===========*/
 
+.guardados .btn {
+    background-color: rgb(39, 127, 175);
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 10%;
+    text-decoration: none;
+}
+
+.editar-btn .btn{
+    background-color: rgba(224, 142, 10);
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.editar .card-header{
+    background-color: rgb(39, 127, 175);
+}

@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 
 
-export const Register = () => {
+export const RZRegister = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState ("");
     const [password, setPassword] = useState("");

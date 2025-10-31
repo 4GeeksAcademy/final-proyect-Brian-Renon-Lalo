@@ -3,13 +3,14 @@ import { getProfile,  updateProfile, uploadUserPhotoBase64 } from "../services/f
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx"; 
 import { useNavigate, Link } from "react-router-dom";
 import e from "cors";
+import { nominalTypeHack } from "prop-types";
 
 
 const DEFAULT_AVATAR_URL = "/profile_pictures/rz-profile-img.png";
 
 
 
-export const Profile = () => {
+export const RZProfile = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -131,9 +132,10 @@ export const Profile = () => {
                         </div>
                     )}
                     
+                    <div className="editar">
                     <div className="card shadow-sm">
-                        <div className="card-header text-center bg-primary text-white">
-                            <h3>Panel de Usuario</h3>
+                        <div className="card-header text-center text-white">
+                            <h3>Perfil de Usuario</h3>
                         </div>
                         <div className="card-body">
                             <div className="text-center mb-4">
@@ -185,6 +187,7 @@ export const Profile = () => {
                             ) : (
                                 // --- VISTA NORMAL ---
                                 <>
+                                    <div className="editar-btn">
                                     <div className="list-group mb-4">
                                         <div className="list-group-item d-flex justify-content-between align-items-center">
                                             Email:
@@ -193,12 +196,13 @@ export const Profile = () => {
                                         
                                         <div className="list-group-item d-flex justify-content-between align-items-center">
                                             <button 
-                                                className="btn btn-outline-primary w-100" 
+                                                className="btn w-100" 
                                                 onClick={() => setIsEditing(true)}
                                             >
                                                 Editar Perfil
                                             </button>
                                         </div>
+                                    </div>
                                     </div>
                                     
                                     
@@ -206,18 +210,20 @@ export const Profile = () => {
                             )}
                         </div>
                     </div>
-                    <div className="container ">
-                        <div className="row justify-content-center">
-                            <Link to="/savedroutes">
-                                <button className="btn btn-primary text-white">RutasZero Guardadas</button>
+                    </div>    
+                    </div>
+                    <div className="guardados">
+                        <div className="row  aling-items-center d-flex justify-content-center flex-column">
+                            <Link to='/savedroutes' className='d-flex justify-content-center'
+                            style={{textDecoration: 'none'}}
+                            >
+                                <button className="btn">RutasZero Guardadas</button>
                             </Link>
                         </div>    
                     </div>
 
                 </div>
             </div>
-            
-        </div>
     );
 };
                         

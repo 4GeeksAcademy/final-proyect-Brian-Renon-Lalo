@@ -118,7 +118,7 @@ export const RZElection = () => {
                                         style={{ height: '100%', objectFit: 'cover' }}
                                     />
                                 </div>
-                                <div className="col-md-8">
+                                <div className="vista-card-btn col-md-8">
                                     <div className="card-body d-flex flex-column justify-content-center h-100">
                                         <h3 className="card-title">{city.name}</h3>
                                         <p className="card-text text-muted">Continente: {city.continent}</p>
@@ -162,7 +162,8 @@ export const RZElection = () => {
                                                             <div className="card-body">
                                                                 <h6 className="card-subtitle mb-2">{route.name}</h6>
                                                                 <button 
-                                                                    className="btn btn-sm mt-2 w-100" 
+                                                                    className="btn btn-sm text-white mt-2 w-100"
+                                                                    style={{backgroundColor:' rgb(39, 127, 175)'}} 
                                                                     onClick={() => handleRouteSelection(route.id)}
                                                                 >
                                                                     Seleccionar Ruta

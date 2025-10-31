@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { getSavedRoutes, unsaveRoute } from '../services/fetch';
 import { getRuteImageFromPexels } from "../services/api_img.js" 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
-export const SavedRoutes = () => {
+export const RZSavedRoutes = () => {
     const [savedRoutes, setSavedRoutes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -73,8 +73,13 @@ export const SavedRoutes = () => {
 
     if (savedRoutes.length === 0) {
         return (
+            <div className='aling-items-center d-flex justify-content-center flex-column'> 
             <div className="alert alert-info text-center mt-5">
                 Aún no tienes rutas guardadas. ¡Explora y añade algunas! 🗺️
+            </div>
+            <Link to='/rzelection' className='d-flex justify-content-center'>
+            <button className='btn'>Selecciona RutaZero</button>
+            </Link>
             </div>
         );
     }
@@ -107,13 +112,14 @@ export const SavedRoutes = () => {
                                             
                                             <div className="mt-auto d-flex gap-2">
                                                 <button 
-                                                    className="btn btn-sm flex-grow-1" 
+                                                    className="btn btn-sm text-white flex-grow-1"
+                                                    style={{backgroundColor:'rgb(39, 127, 175)'}} 
                                                     onClick={() => handleRouteClick(route.id)}
                                                 >
                                                     Ver Detalles
                                                 </button>
                                                 <button 
-                                                    className="btn btn-sm"
+                                                    className="btn btn-sm text-white"
                                                     style={{backgroundColor: 'rgb(161, 30, 30)'}} 
                                                     onClick={() => handleDeleteRoute(route.id, route.name)}
                                                     title="Eliminar de favoritos"

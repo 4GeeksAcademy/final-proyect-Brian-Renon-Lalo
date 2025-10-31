@@ -3,7 +3,7 @@ import rzHome from "../assets/img/rz-home.png";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { Link } from "react-router-dom"; 
 
-export const Home = () => {
+export const RZHome = () => {
 
 	const { store, dispatch } = useGlobalReducer()
 

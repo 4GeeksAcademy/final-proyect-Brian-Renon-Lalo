@@ -62,14 +62,14 @@ export const Navbar = () => {
                                         <button 
                                             className="nav-link btn btn-link" 
                                             onClick={() => handleNavigation("/rzelection")}>
-                                            Selecciona tu RutaZero
+                                            Selecciona RutaZero
                                         </button>
                                     </li>
                                     <li className="nav-item mx-3">
                                         <button 
                                             className="nav-link btn btn-link" 
                                             onClick={() => handleNavigation("/savedroutes")}>
-                                            RutasZero Guardadas
+                                            RutaZero Guardadas
                                         </button>
                                     </li>
                                     <li className="nav-item ms-3">

@@ -45,17 +45,17 @@ export const RZHome = () => {
 					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
 				</div>
 
-				{/* Contenido del Carrusel (las imágenes) */}
+				
 				<div className="carousel-inner">
 					<div className="carousel-item active">
 						<img src={rzHome} className="d-block w-100 img-fluid" alt="RutaZero Logo" />
 					</div>
 					<div className="carousel-item">
-						{/* Uso de la imagen Captura.jpg */}
+						
 						<img src={vistaruta} className="d-block w-100 img-fluid" alt="Vista Previa Rutas New York" />
 					</div>
 					<div className="carousel-item">
-						{/* Uso de la imagen Captura2.jpg */}
+						
 						<img src={vistadiaruta} className="d-block w-100 img-fluid" alt="Vista Previa Mapa New York" />
 					</div>
 				</div>
@@ -86,16 +86,11 @@ export const RZHome = () => {
 				<h4 className="display-6">¡Entra en <Link to="/login" className="home-login"><span className="color-rz">RutaZero</span></Link>!</h4>
 			</div>
 			<p className="display-6">Hecho para viajeros rápidos, curiosos y estratégicos.</p>
+				<div 
+					className={`status-indicator ${store.message ? "online" : "offline"}`} 
+					title={store.message ? "Backend conectado" : "Backend desconectado"}
+				></div>
 
-			<div className="alert alert-info">
-				{store.message ? (
-					<span>{store.message}</span>
-				) : (
-					<span className="text-danger">
-						Loading message from the backend (make sure your python 🐍 backend is running)...
-					</span>
-				)}
-			</div>
 		</div>
 	);
 }; 

@@ -217,7 +217,7 @@ export const RZProfile = () => {
                             <Link to='/savedroutes' className='d-flex justify-content-center'
                             style={{textDecoration: 'none'}}
                             >
-                                <button className="btn">RutasZero Guardadas</button>
+                                <button className="btn">RutaZero Guardadas</button>
                             </Link>
                         </div>    
                     </div>

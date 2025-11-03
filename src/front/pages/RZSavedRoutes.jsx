@@ -73,12 +73,15 @@ export const RZSavedRoutes = () => {
 
     if (savedRoutes.length === 0) {
         return (
-            <div className='aling-items-center d-flex justify-content-center flex-column'> 
+            <div className='saved-route aling-items-center d-flex justify-content-center flex-column'> 
             <div className="alert alert-info text-center mt-5">
                 Aún no tienes rutas guardadas. ¡Explora y añade algunas! 🗺️
             </div>
-            <Link to='/rzelection' className='d-flex justify-content-center'>
-            <button className='btn'>Selecciona RutaZero</button>
+            <Link to='/rzelection' 
+            className='d-flex justify-content-center'
+            style={{textDecoration:'none'}}
+            >
+            <button className='btn text-white'>Selecciona RutaZero</button>
             </Link>
             </div>
         );

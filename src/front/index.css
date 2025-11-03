@@ -42,6 +42,7 @@ footer {
 }
 
 
+
 /*==========Login========*/
 
 .login-container{
@@ -171,4 +172,11 @@ footer {
 }
 .editar .card-header{
     background-color: rgb(39, 127, 175);
+}
+
+
+/*=============SaveRoutes============*/
+.saved-route .btn {
+    background-color: rgb(39, 127, 175);
+    margin: 5%;
 }

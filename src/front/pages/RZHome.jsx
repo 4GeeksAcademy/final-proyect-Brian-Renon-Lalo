@@ -36,7 +36,7 @@ export const RZHome = () => {
 	}, [])
 
 	return (
-		<div className="text-center justify-content-center aling-items-center mt-5">
+		<div className="text-center justify-content-center aling-items-center py-5">
 			<div id="carouselExampleIndicators" className="carousel slide mb-5 mx-auto" data-bs-ride="carousel" style={{ maxWidth: '800px' }}>
 
 				<div className="carousel-indicators">
@@ -76,16 +76,16 @@ export const RZHome = () => {
 
 
 			<div className="info-container">
-				<h3 className="display-1">Optimiza tu tiempo</h3>
-				<h3 className="display-1">en cada ciudad</h3>
-				<p className="display-6"><span className="color-rz">RutaZero</span> te proporciona la mejor ruta para aprovechar</p>
-				<p className="display-6">al máximo tus horas sin perder lugares clave</p>
+				<h1 className="display-4 fw-bold">Optimiza tu tiempo</h1>
+				<h2 className="display-4 fw-bold mb-4">en cada ciudad</h2>
+				<p className="lead fs-4"><span className="color-rz">RutaZero</span> te proporciona la mejor ruta para aprovechar</p>
+				<p className="lead fs-4">al máximo tus horas sin perder lugares clave</p>
 			</div>
 
-			<div className="home-container">
-				<h4 className="display-6">¡Entra en <Link to="/login" className="home-login"><span className="color-rz">RutaZero</span></Link>!</h4>
+			<div className="home-container my-5">
+				<h3 className="display-5">¡Entra en <Link to="/login" className="home-login"><span className="color-rz">RutaZero</span></Link>!</h3>
 			</div>
-			<p className="display-6">Hecho para viajeros rápidos, curiosos y estratégicos.</p>
+			<p className="fs-5 mb-4">Hecho para viajeros rápidos, curiosos y estratégicos.</p>
 				<div 
 					className={`status-indicator ${store.message ? "online" : "offline"}`} 
 					title={store.message ? "Backend conectado" : "Backend desconectado"}

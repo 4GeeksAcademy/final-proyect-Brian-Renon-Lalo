@@ -9,9 +9,8 @@ body{
 
 /*=========Footer=========*/
 
-
-.img-footer {
-    zoom: 25%;
+.img-footer-center {
+    zoom: 35%;
 }
 .footer {
 	background-color:rgba(224, 142, 10, 0.57); 
@@ -102,13 +101,32 @@ body{
     background-size: cover;
     background-position: center;
 }
+.navbar .nav-link {
+    color: black; 
+    font-weight: 500;
+    padding: 0.5rem 0.75rem; 
+    text-decoration: none;
+    border-bottom: 2px solid transparent; 
+    transition: all 0.2s ease-in-out;
+}
+
+.navbar .active-nav-link {
+    color:  rgb(39, 127, 175); 
+    font-weight: 700;
+    border-bottom: 2px solid  rgb(39, 127, 175); 
+}
+
+.navbar .nav-link:hover {
+    color: rgb(39, 127, 175); 
+    border-bottom: 2px solid rgb(39, 127, 175);
+    opacity: 0.8;
+}
 
 
 
 /*==========Login========*/
 
 .login-container{
-    width: 40%;
     align-content: center;
     align-items: center;
     justify-content: center;
@@ -117,7 +135,6 @@ body{
     font-size: 55px;
     text-align: center;
     align-items: center;
-    margin-top: 20%;
 }
 .login-container .btn{
     background-color: rgb(39, 127, 175);
@@ -126,7 +143,7 @@ body{
 }
 .form-container {
     background-color: rgba(224, 142, 10, 0.527);
-    margin-top: 10%;
+    margin-top: 5%;
     margin-bottom: 20%;
     padding: 10% ;
     border-radius: 5%;
@@ -140,7 +157,6 @@ body{
 
 /*======Register=======*/
 .register-container{
-    width: 40%;
     align-content: center;
     align-items: center;
     justify-content: center;
@@ -149,8 +165,6 @@ body{
     font-size: 55px;
     text-align: center;
     align-items: center;
-    margin-top: 20%;
-    
 }
 .register-container .btn{
     background-color: rgb(39, 127, 175);
@@ -187,7 +201,6 @@ body{
 .info-container{
     width: 100%;
     height: 30%;
-    margin-bottom: 10%;
 }
 .info-container h3{
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.60);

@@ -89,7 +89,7 @@ export const RZSavedRoutes = () => {
     
     return (
         <div className="container mt-5">
-            <h2 className="display-5 text-center mb-4 border-bottom pb-2">Tus <span className="color-rz">RutasZero</span> Guardadas</h2>
+            <h2 className="display-5 text-center mb-4 border-bottom pb-2">Tus <span className="color-rz">RutaZero</span> Guardadas</h2>
             
             <div className="row justify-content-center">
                 {savedRoutes.map((route) => {

@@ -32,12 +32,12 @@ export const RZRegister = () => {
 
 
     return (
-        <div className="register-container">
-            <h2>Register</h2>
+        <div className="register-container d-flex flex-column align-items-center justify-content-center p-4">
+            <h2>Nueva Cuenta</h2>
             <div className="register-form-container">
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
-                        <label htmlFor="name">Name</label>
+                        <label htmlFor="name">Nombre</label>
                         <input className="form-control" type="text" id="name" value={name} placeholder="Name" onChange={(e) => setName(e.target.value)} required/>
                     </div>
                     <div className="mb-3">
@@ -45,14 +45,14 @@ export const RZRegister = () => {
                         <input className="form-control" type="email" id="email" value={email} placeholder="Email" onChange={(e) => setEmail(e.target.value)} required/>
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="password">Password</label>    
+                        <label htmlFor="password">Contraseña</label>    
                         <input className="form-control" type="password" id="password" value={password} placeholder="Password" onChange={(e) => setPassword(e.target.value)} required/>
                     </div>
-                    <button className="btn" type="submit">Register</button>
+                    <button className="btn" type="submit">Registrar</button>
                 </form>
                 {error && <p className="error">{error}</p>}
                 {success && <p className="success">{success}</p>}
-                <p>If you have an account <Link to="/login">Login</Link></p>
+                <p>Si ya dispones de una cuenta, <Link to="/login">Iniciar Sesión</Link></p>
             </div>    
         </div>   
     );

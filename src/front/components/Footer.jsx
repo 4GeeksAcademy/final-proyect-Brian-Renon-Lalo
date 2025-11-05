@@ -23,12 +23,21 @@ export const Footer = () => (
 						Explorando ciudades. Diseñando experiencias.
 					</p>
 				</div>
-				<div className="position-absolute w-100 d-flex justify-content-center" style={{top: "50%", transform: "translateY(-40%)"}}>
-					<img src={rzBrand} className="img-footer" />
-				</div>
+				<div 
+                    className="d-none d-md-flex justify-content-center" 
+                    style={{ 
+                        position: "absolute", 
+                        width: "100%", 
+                        top: "50%", 
+                        transform: "translateY(-50%)",
+                        zIndex: 0 
+                    }}
+                >
+                    <img src={rzBrand} className="img-footer-center" alt="RutaZero Logo Central" />
+                </div>
 
 			</div>
-			<div className="text-center mt-4">
+			<div className="text-center border-top mt-4">
 				<p className="small copyright m-0">
 					© {new Date().getFullYear()} RutaZero • Todos los derechos reservados
 				</p>

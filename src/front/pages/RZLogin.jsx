@@ -44,8 +44,8 @@ export const RZLogin = () => {
 
 
     return (
-        <div className="login-container">
-            <h2>Login</h2>
+        <div className="login-container d-flex flex-column align-items-center justify-content-center p-4">
+            <h2>Iniciar Sesión</h2>
             <div className="form-container">
                 <form onSubmit={handleSubmit}> 
                     <div className="mb-3">
@@ -53,16 +53,16 @@ export const RZLogin = () => {
                         <input className="form-control" type="email" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="login-password">Password</label>
+                        <label htmlFor="login-password">Contraseña</label>
                         <input className="form-control" type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)}required/>
                     </div>    
-                    <button type="submit" className="btn">LogIn</button>
+                    <button type="submit" className="btn">Iniciar Sesión</button>
                 </form>
             
                 {error && <p className="error">{error}</p>}
                 {success && <p className="success">{success}</p>}
 
-                <p>If you aren't registered, please go to <Link to="/register">register</Link></p>
+                <p>Si no estas resgistrado, por favor dirigete a <Link to="/register">registrar</Link></p>
             </div>
         </div>
     );

@@ -5,7 +5,9 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-}
+    height: 100%;
+    margin: 0;
+  }
 
 /*=========Footer=========*/
 
@@ -130,6 +132,7 @@ body{
     align-content: center;
     align-items: center;
     justify-content: center;
+    min-height: 70dvh;
 }
 .login-container h2{
     font-size: 55px;
@@ -274,4 +277,13 @@ body{
 .saved-route .btn {
     background-color: rgb(39, 127, 175);
     margin: 5%;
+    flex-grow: 1;
+}
+.saved-route{
+    min-height: 70dvh;
+    display: flex;
+    flex-direction: column
+}
+.rzsave {
+    min-height: 70dvh;
 }

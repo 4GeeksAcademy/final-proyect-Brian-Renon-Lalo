@@ -74,21 +74,21 @@ export const RZSavedRoutes = () => {
     if (savedRoutes.length === 0) {
         return (
             <div className='saved-route aling-items-center d-flex justify-content-center flex-column'> 
-            <div className="alert alert-info text-center mt-5">
-                Aún no tienes rutas guardadas. ¡Explora y añade algunas! 🗺️
-            </div>
-            <Link to='/rzelection' 
-            className='d-flex justify-content-center'
-            style={{textDecoration:'none'}}
-            >
-            <button className='btn text-white'>Selecciona RutaZero</button>
-            </Link>
+                <div className="alert alert-info text-center mt-5">
+                    Aún no tienes rutas guardadas. ¡Explora y añade algunas! 🗺️
+                </div>
+                <Link to='/rzelection' 
+                className='d-flex justify-content-center'
+                style={{textDecoration:'none'}}
+                >
+                    <button className='btn text-white'>Selecciona RutaZero</button>
+                </Link>
             </div>
         );
     }
     
     return (
-        <div className="container mt-5">
+        <div className="rzsave container mt-5">
             <h2 className="display-5 text-center mb-4 border-bottom pb-2">Tus <span className="color-rz">RutaZero</span> Guardadas</h2>
             
             <div className="row justify-content-center">

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import rzHome from "../assets/img/rz-home.png";
-import vistadiaruta from "../assets/img/vistadiaruta.jpg";
-import vistaruta from "../assets/img/vistaruta.jpg";
+import vistadiaruta from "../assets/img/vistadiaruta.png";
+import vistaruta from "../assets/img/vistaruta.png";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { Link } from "react-router-dom";
 
@@ -37,7 +37,7 @@ export const RZHome = () => {
 
 	return (
 		<div className="text-center justify-content-center aling-items-center py-5">
-			<div id="carouselExampleIndicators" className="carousel slide mb-5 mx-auto" data-bs-ride="carousel" style={{ maxWidth: '800px' }}>
+			<div id="carouselExampleIndicators" className="carousel slide mb-5 mx-auto" data-bs-ride="carousel" style={{ maxWidth: '750px' }}>
 
 				<div className="carousel-indicators">
 					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>

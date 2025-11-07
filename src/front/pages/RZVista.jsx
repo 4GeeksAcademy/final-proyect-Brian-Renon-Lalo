@@ -228,8 +228,10 @@ export const RZVista = () => {
 
     return (
         <div className="container mt-5">
-            <div className="text-secondary-bg" onClick={handleGoBack}>
-                <p>&larr; Volver atrás</p>
+            <div className="text-secondary-bg"
+             style={{ cursor: 'pointer' }}
+             onClick={handleGoBack}>
+                <span>&larr; Volver atrás</span>
             </div>
 
             <div className="mb-4 d-flex justify-content-between align-items-center">

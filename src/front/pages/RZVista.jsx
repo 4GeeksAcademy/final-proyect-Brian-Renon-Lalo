@@ -229,7 +229,7 @@ export const RZVista = () => {
     return (
         <div className="container mt-5">
             <div className="text-secondary-bg" onClick={handleGoBack}>
-                <p>&larr; Volver a selección de rutas</p>
+                <p>&larr; Volver atrás</p>
             </div>
 
             <div className="mb-4 d-flex justify-content-between align-items-center">

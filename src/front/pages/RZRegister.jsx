@@ -12,21 +12,27 @@ export const RZRegister = () => {
     const [error, setError] = useState ("");
     const [success, setSuccess] = useState (""); 
     const navigate = useNavigate();
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@@#$%^&*])(?=.{8,})/;
 
 
-    const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
         setSuccess("");
 
+        if (!passwordRegex.test(password)) {
+            alert("⚠️La contraseña debe tener al menos 8 caracteres, incluir una mayúscula y un símbolo especial (!@#$%^&*).⚠️");
+            return; 
+        }
+
         try{
-            const data = await register(name,email,password);
+            const data = await register(name, email, password);
             setSuccess("Register completed successfully ✅");
             setTimeout(() => {
-            navigate("/login");
-            },2000);
+                navigate("/login");
+            }, 2000);
         } catch (err) {
-            setError("Error trying to register❌");
+            setError("Error trying to register❌"); 
         }
     };
 
@@ -38,7 +44,7 @@ export const RZRegister = () => {
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="name">Nombre</label>
-                        <input className="form-control" type="text" id="name" value={name} placeholder="Name" onChange={(e) => setName(e.target.value)} required/>
+                        <input className="form-control" type="text" id="name" value={name} placeholder="Nombre" onChange={(e) => setName(e.target.value)} required/>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="email">Email</label>
@@ -46,7 +52,7 @@ export const RZRegister = () => {
                     </div>
                     <div className="mb-3">
                         <label htmlFor="password">Contraseña</label>    
-                        <input className="form-control" type="password" id="password" value={password} placeholder="Password" onChange={(e) => setPassword(e.target.value)} required/>
+                        <input className="form-control" type="password" id="password" value={password} placeholder="Ejemploo!" onChange={(e) => setPassword(e.target.value)} required/>
                     </div>
                     <button className="btn" type="submit">Registrar</button>
                 </form>

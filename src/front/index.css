@@ -185,6 +185,20 @@ body{
 .register-form-container link{
     color:rgb(39, 127, 175);
 }
+.password-input-wrapper {
+    position: relative;
+    width: 100%; 
+}
+
+.toggle-password-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;   
+    background-color: transparent; 
+    cursor: pointer;
+    z-index: 10;
+}
+
 
 /*===========Home==========*/
 .img-logo{

@@ -1,0 +1,96 @@
+import React, { useEffect } from "react"
+import rzHome from "../assets/img/rz-home.png";
+import vistadiaruta from "../assets/img/vistadiaruta.png";
+import vistaruta from "../assets/img/vistaruta.png";
+import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import { Link } from "react-router-dom";
+
+export const RZHome = () => {
+
+	const { store, dispatch } = useGlobalReducer()
+
+	const loadMessage = async () => {
+		try {
+			const backendUrl = import.meta.env.VITE_BACKEND_URL
+
+			if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file")
+
+			const response = await fetch(backendUrl + "/api/hello")
+			const data = await response.json()
+
+			if (response.ok) dispatch({ type: "set_hello", payload: data.message })
+
+			return data
+
+		} catch (error) {
+			if (error.message) throw new Error(
+				`Could not fetch the message from the backend.
+				Please check if the backend is running and the backend port is public.`
+			);
+		}
+
+	}
+
+	useEffect(() => {
+		loadMessage()
+	}, [])
+
+	return (
+		<div className="text-center justify-content-center aling-items-center py-5">
+			<div id="carouselExampleIndicators" className="carousel slide mb-5 mx-auto" data-bs-ride="carousel" style={{ maxWidth: '750px' }}>
+
+				<div className="carousel-indicators">
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+				</div>
+
+				
+				<div className="carousel-inner">
+					<div className="carousel-item active">
+						<img src={rzHome} className="d-block w-100 img-fluid" alt="RutaZero Logo" />
+					</div>
+					<div className="carousel-item">
+						
+						<img src={vistaruta} className="d-block w-100 img-fluid" alt="Vista Previa Rutas New York" />
+					</div>
+					<div className="carousel-item">
+						
+						<img src={vistadiaruta} className="d-block w-100 img-fluid" alt="Vista Previa Mapa New York" />
+					</div>
+				</div>
+
+
+				<button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+					<span className="carousel-control-prev-icon" aria-hidden="true" 
+					style={{ backgroundColor: 'rgba(224, 142, 10, 0.527)', borderRadius: '50%' }}></span>
+					<span className="visually-hidden">Anterior</span>
+				</button>
+				<button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+					<span className="carousel-control-next-icon" aria-hidden="true"
+					style={{ backgroundColor: 'rgba(224, 142, 10, 0.527)', borderRadius: '50%' }}></span>
+					<span className="visually-hidden">Siguiente</span>
+				</button>
+			</div>
+
+
+
+			<div className="info-container">
+				<h1 className="display-4 fw-bold">Optimiza tu tiempo</h1>
+				<h2 className="display-4 fw-bold mb-4">en cada ciudad</h2>
+				<p className="lead fs-4"><span className="color-rz">RutaZero</span> te proporciona la mejor ruta para aprovechar</p>
+				<p className="lead fs-4">al máximo tus horas sin perder lugares clave</p>
+			</div>
+
+			<div className="home-container my-5">
+				<h3 className="display-5">¡Entra en <Link to="/login" className="home-login"><span className="color-rz">RutaZero</span></Link>!</h3>
+			</div>
+			<p className="fs-5 mb-4">Hecho para viajeros rápidos, curiosos y estratégicos.</p>
+				<div 
+					className={`status-indicator ${store.message ? "online" : "offline"}`} 
+					title={store.message ? "Backend conectado" : "Backend desconectado"}
+				></div>
+
+		</div>
+	);
+}; 

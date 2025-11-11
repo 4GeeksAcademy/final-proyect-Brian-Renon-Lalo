@@ -6,9 +6,15 @@ import {
     Route,
 } from "react-router-dom";
 import { Layout } from "./pages/Layout";
-import { Home } from "./pages/Home";
+import { RZHome } from "./pages/RZHome";
 import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
+import { RZRegister } from "./pages/RZRegister";
+import { RZLogin } from "./pages/RZLogin";
+import { RZProfile } from "./pages/RZProfile";
+import { RZElection } from "./pages/RZElection";
+import { RZVista } from "./pages/RZVista";
+import { RZSavedRoutes } from "./pages/RZSavedRoutes";
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -22,9 +28,16 @@ export const router = createBrowserRouter(
       <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
 
         {/* Nested Routes: Defines sub-routes within the BaseHome component. */}
-        <Route path= "/" element={<Home />} />
+        <Route path= "/" element={<RZHome />} />
         <Route path="/single/:theId" element={ <Single />} />  {/* Dynamic route for single items */}
         <Route path="/demo" element={<Demo />} />
+        <Route path="/register" element={<RZRegister />} />
+        <Route path="/login" element={<RZLogin />} />
+        <Route path="/profile" element={<RZProfile />} />
+        <Route path="/rzelection" element={<RZElection />} />
+        <Route path="/routes/:routeId" element={<RZVista />} />
+        <Route path="/savedroutes" element={<RZSavedRoutes />} />
+        
       </Route>
     )
 );
